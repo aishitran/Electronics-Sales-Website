@@ -59,19 +59,19 @@
 
         .hotline-box {
             display: flex;
-            align-items: center; /* Căn giữa icon với chữ */
-            gap: 5px; /* Khoảng cách giữa icon và chữ */
-            color: white; /* Màu chữ */
+            align-items: center; 
+            gap: 5px; 
+            color: white;
             font-family: Arial, sans-serif;
         }
 
         .hotline-box i {
-            font-size: 20px; /* Kích thước icon */
+            font-size: 20px;
         }
 
         .hotline-text {
             display: flex;
-            flex-direction: column; /* Đặt "Gọi mua hàng" trên số */
+            flex-direction: column;
             line-height: 1.2;
         }
 
