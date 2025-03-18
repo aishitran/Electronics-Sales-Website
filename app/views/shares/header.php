@@ -1,127 +1,182 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Trang chủ - Zken Mbook</title> 
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 
-    <!--Boostrap CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!--Boostrap Icons-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
-        .navbar{
-            background-color: #c98a84;
+        body {
+            background-color:rgb(255, 255, 255);
+            color: white;
+        }
+
+        /* Navbar Top */
+        .navbar-top {
+            background-color: #2E1A16; 
             padding: 10px 0;
         }
-        
-        .navbar-brand{
-            font-weight: bold;
-            color: #000;
+
+        .navbar-top .nav-link, .navbar-top .btn {
+            color: white;
+            transition: 0.3s;
         }
 
-        .navbar-brand span{
-            color: green;
+        .navbar-top .nav-link:hover, .navbar-top .btn:hover {
+            color: #bbbbbb;
         }
 
-        .search-box{
-            flex-grow: 1;
+        /* Search Bar */
+        .search-box {
+            max-width: 500px;
+            margin: auto;
             display: flex;
             align-items: center;
-            background: white;
+            background:rgb(255, 255, 255);
             border-radius: 20px;
-            padding: 5px 10px;
+            padding: 5px 15px;
         }
 
-        .search-box input{
+        .search-box input {
             border: none;
             outline: none;
+            background: transparent;
+            color: white;
             flex-grow: 1;
         }
-        
-        .search-box button{
+
+        .search-box input::placeholder {
+            color: #a0a0a0;
+        }
+
+        .search-box button {
             background: none;
             border: none;
+            color: #a0a0a0;
         }
 
-        .nav-icons{
-            display: flex;
-            gap: 20px;
-            padding: 5px;
+        /* Cart Badge */
+        .badge.bg-danger {
+            background-color: red !important;
         }
 
-        .nav-icons a{
+        /* Navbar Bottom */
+        .navbar-bottom {
+            background-color: #2E1A16; 
+            padding: 10px 0;
+            border-top: 1px solid rgb(255, 255, 255); 
+        }
+
+        /* Navbar Links Styling */
+        .navbar-bottom .nav-link {
+            color: #d1cfcf;
+            transition: color 0.3s;
+        }
+
+        .navbar-bottom .nav-link:hover {
+            color: #f0a500;
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            background-color: #2E1A16;
+        }
+
+        .dropdown-menu .dropdown-item {
             color: white;
-            text-decoration: none;
         }
 
-        .hotline-box {
-            display: flex;
-            align-items: center; 
-            gap: 5px; 
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-
-        .hotline-box i {
-            font-size: 20px;
-        }
-
-        .hotline-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-
-        .hotline-text span {
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .hotline-text b {
-            font-size: 18px;
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #3A2A28;
         }
     </style>
-</head> 
-<body> 
-    <nav class="navbar navbar-expand-lg"> 
-        <div class="container">
+</head>
+<body>
 
-            <!--Chèn logo-->
-            <a class="navbar-brand" href="#">Zken <span>Mbook</span></a> 
-            <!--Menu-->
-            <div class="category-menu">
-                <a href="#" class="btn btn-dark"><i class="bi bi-list"></i></a>
+    <!-- Top Navbar (Logo, Search Bar, User Info, Cart) -->
+    <nav class="navbar navbar-expand-lg navbar-top">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="CHUACO.png" alt="MACBOOK" height="40">
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box w-50">
+            <button><i class="fas fa-search"></i></button>
+            <input type="text" placeholder="Bạn đang tìm kiếm gì?">
             </div>
 
-            <!--Menu-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" datatarget="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> 
-                <span class="navbar-toggler-icon"></span> 
-            </button> 
-
-            <!--Nội dung Navbar-->
-            <div class="collapse navbar-collapse" id="navbarNav"> 
-                <div class = "mx-auto search-box">
-                    <input type="text" placeholder="Hôm nay bạn mua gì?">
-                    <button><i class ="bi bi-search"></i></button>
-                </div>
-
-                <div class="hotline-box">
-                    <i class="bi bi-telephone"></i>
-                    <div class="hotline-text">
-                        <span class ="text-center">Hotline</span>
-                        <b>1800.xxxx</b>       
-                    </div>
-                    <a href="#" class="btn btn-white"><i class="bi bi-cart"></i></a>
-                    <a href="#" class="btn btn-dark"><i class="bi bi-person-square"></i></a>
-                </div>
-            </div> 
-        </div> 
+            <!-- Right-side Nav -->
+            <ul class="navbar-nav ms-auto"> 
+                <li class="nav-item me-3">
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo "<a class='nav-link'><strong>" . $_SESSION['username'] . "</strong></a>";
+                    } else {
+                        echo "<a class='btn btn-outline-light' href='/project1/account/login'>Login</a>";
+                    }
+                    ?>
+                </li>
+                <li class="nav-item me-3">
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo "<a class='btn btn-outline-light ms-2' href='/project1/account/logout'>Logout</a>";
+                    }
+                    ?>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link position-relative" href="/project1/Product/cart">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <span class="position-absolute top-90 start-90 translate-middle badge bg-danger">
+                            <?php 
+                            $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0;
+                            echo $cart_count;
+                            ?>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-     <!-- Bootstrap JS -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
-</body> 
-</html> 
+    <!-- Bottom Navbar (Trang chủ, Danh mục, Liên hệ) -->
+    <nav class="navbar navbar-expand-lg navbar-bottom">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trang chủ</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Danh mục
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        <li><a class="dropdown-item" href="#">Tai nghe</a></li>
+                        <li><a class="dropdown-item" href="#">Bàn phím</a></li>
+                        <li><a class="dropdown-item" href="#">Chuột</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Liên hệ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
