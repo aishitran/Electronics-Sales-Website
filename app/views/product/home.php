@@ -61,29 +61,55 @@
     .slider-dots .dot.active {
         background-color: #333;
     }
+
+    .sidebar {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .sidebar .list-group-item a {
+            text-decoration: none;
+            color: #333;
+        }
+        .sidebar .list-group-item a:hover {
+                color: #ff6600;
+        }
+
+        .sidebar {
+            background-color:#2E1A16; 
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar h5 {
+            color: white;
+            font-weight: bold;
+        }
+
+
 </style>
 
 <div class="container mt-4 px-3">
     <div class="row">
-        <div class="col-md-3">
-            <div class="sidebar">
-                <h5><i class="bi bi-list"></i> Danh mục</h5>
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="#">Bàn phím</a></li>
-                    <li class="list-group-item"><a href="#">Màn hình</a></li>
-                    <li class="list-group-item"><a href="#">Laptop Gaming, văn phòng</a></li>
-                    <li class="list-group-item"><a href="#">Gaming Gear</a></li>
-                    <li class="list-group-item"><a href="#">Máy tính để bàn</a></li>
-                    <li class="list-group-item"><a href="#">Linh kiện máy tính</a></li>
-                    <li class="list-group-item"><a href="#">Linh kiện khác</a></li>
-                </ul>
-            </div>
+        <div class="col-md-3 ">
+            <div class="sidebar rounded shadow-sm">
+                    <h5><i class="bi bi-list"></i> Danh mục</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">Bàn phím</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Màn hình</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Laptop Gaming, văn phòng</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Gaming Gear</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Máy tính để bàn</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Linh kiện máy tính</a> <i class="bi bi-chevron-right"></i></li>
+                        <li class="list-group-item"><a href="#">Linh kiện khác</a> <i class="bi bi-chevron-right"></i></li>
+                    </ul>
+                </div>
             <!--Sản phẩm nổi bật -->
             <h3 class="featured-products-title mt-4">Sản phẩm nổi bật <i class="bi bi-fire text-danger"></i></h3>
         </div>
         
         <div class="col-md-9">
-            <h2>Trang chủ</h2>
+            <h2>Không mua ở đây thì mua ở đâu?</h2>
             <div class="slider-images">
                 <img src="https://i.imgur.com/eOrOjIv.png" alt="Image 1" data-slide="0" class="slide active">
                 <img src="https://i.imgur.com/wBYX31O.png" alt="Image 2" data-slide="1" class="slide">
@@ -102,6 +128,7 @@
     <img src="https://www.istore.com.ng/cdn/shop/files/MacBook_Air_M3_Now_Available_Desktop_Banner_2000x.jpg?v=1711115634" alt="MacBook Air" class="banner-image">
 </div>
 
+<!--Script chuyển động slide sản phẩm-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dots = document.querySelectorAll('.slider-dots .dot');

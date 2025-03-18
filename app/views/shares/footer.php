@@ -1,45 +1,60 @@
-<footer class="bg-light w-100"> 
-    <div class="container mt-4 px-4 "> 
+<footer class="text-light pt-4 pb-3" style="background-color: #2E1A16;"> 
+    <div class="container"> 
         <div class="row"> 
-            <!-- Cột hỗ trợ khách hàng --> 
-            <div class="col-lg-3 col-md-12 mb-4"> 
-                <h5 class="text-uppercase">Hỗ trợ khách hàng</h5> 
-                <ul class="list-unstyled mb-0"> 
-                    <li><a href="" class="text-dark">Hướng dẫn mua hàng</a></li> 
-                    <li><a href="" class="text-dark">Chính sách trả góp</a></li> 
-                    <li><a href="" class="text-dark">Dịch vụ sửa chữa</a></li>
-                    <li><a href="" class="text-dark">Tư vấn sản phẩm</a></li>
-                </ul>  
-            </div> 
-            <!-- Cột thông tin và chính sách --> 
+            <!-- Thông tin liên hệ -->
             <div class="col-lg-3 col-md-6 mb-4"> 
-                <h5 class="text-uppercase">Thông tin và chính sách</h5> 
-                <ul class="list-unstyled mb-0"> 
-                    <li><a href="" class="text-dark">Xem ưu đãi member</a></li> 
-                    <li><a href="" class="text-dark">Tra cứu thông tin bảo hành</a></li> 
-                    <li><a href="" class="text-dark">Tra cứu hóa đơn điện tử</a></li> 
+                <h5 class="text-uppercase fw-bold">THÔNG TIN LIÊN HỆ</h5> 
+                <p><strong>Tên công ty:</strong> Zken Mbook</p>
+                <p><strong>Địa chỉ:</strong> 10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Thủ Đức, Hồ Chí Minh</p>
+                <p><strong>Email:</strong> cskh@temp.net</p>
+                <p><strong>Hotline:</strong> 02835120785</p>
+                <p><strong>Thời gian hỗ trợ:</strong> 06:30 - 17:00 các ngày trong tuần</p>
+            </div> 
+            
+            <!-- Hướng dẫn --> 
+            <div class="col-lg-3 col-md-6 mb-4"> 
+                <h5 class="text-uppercase fw-bold">HƯỚNG DẪN</h5> 
+                <ul class="list-unstyled"> 
+                    <li><a href="#" class="text-light text-decoration-none">Hướng dẫn mua hàng</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Hướng dẫn thanh toán</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Hướng dẫn giao nhận</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Điều khoản dịch vụ</a></li> 
                 </ul> 
             </div> 
- 
-            <!-- Cột mạng xã hội --> 
+            
+            <!-- Chính sách --> 
             <div class="col-lg-3 col-md-6 mb-4"> 
-                <h5 class="text-uppercase">Kết nối với chúng tôi</h5> 
-                <a href="#" class="text-dark mr-3"><i class="fab fa-facebook-f"></i></a> 
-                <a href="#" class="text-dark mr-3"><i class="fab fa-twitter"></i></a> 
-                <a href="#" class="text-dark mr-3"><i class="fab fa-instagram"></i></a> 
+                <h5 class="text-uppercase fw-bold">CHÍNH SÁCH</h5> 
+                <ul class="list-unstyled"> 
+                    <li><a href="#" class="text-light text-decoration-none">Chính sách bảo mật</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Chính sách bảo hành</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Chính sách vận chuyển</a></li> 
+                    <li><a href="#" class="text-light text-decoration-none">Quy trình đặt hàng</a></li> 
+                </ul> 
+            </div> 
+            
+            <!-- Kết nối + Bản đồ --> 
+            <div class="col-lg-3 col-md-6 mb-4"> 
+                <h5 class="text-uppercase fw-bold">KẾT NỐI</h5> 
+                <a href="#" class="text-white me-3"><i class="fa-brands fa-facebook-f fa-lg"></i></a> 
+                <a href="#" class="text-white me-3"><i class="fa-brands fa-discord fa-lg"></i></a> 
+                <div class="mt-3">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4276420661968!2d106.78537299999999!3d10.8550427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527c3debb5aad%3A0x5fb58956eb4194d0!2zxJDhuqFpIEjhu41jIEh1dGVjaCBLaHUgRQ!5e0!3m2!1svi!2s!4v1742326519082!5m2!1svi!2s" 
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div> 
         </div> 
     </div> 
- 
-    <!-- Dòng bản quyền --> 
-    <div class="text-center p-3 bg-dark text-white"> 
-        © 2025 Zken Mbook. All rights reserved. 
+    <div class="text-center p-3 bg-black text-white"> 
+        @ Bản quyền thuộc về dr026
     </div> 
-</footer>
+</footer> 
 
-
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
