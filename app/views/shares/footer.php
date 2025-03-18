@@ -52,7 +52,7 @@
             </div> 
         </div> 
     </div> 
-    <div class="text-center p-3 bg-black text-white"> 
+    <div class="text-center p-3 bg-white text-white"> 
         @ Bản quyền thuộc về dr026
     </div> 
 </footer> 
