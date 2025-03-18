@@ -1,7 +1,7 @@
 <footer class="bg-light w-100"> 
     <div class="container mt-4 px-4 "> 
         <div class="row"> 
-            <!-- Cột thông tin liên hệ --> 
+            <!-- Cột hỗ trợ khách hàng --> 
             <div class="col-lg-3 col-md-12 mb-4"> 
                 <h5 class="text-uppercase">Hỗ trợ khách hàng</h5> 
                 <ul class="list-unstyled mb-0"> 
@@ -11,7 +11,7 @@
                     <li><a href="" class="text-dark">Tư vấn sản phẩm</a></li>
                 </ul>  
             </div> 
-            <!-- Cột liên kết nhanh --> 
+            <!-- Cột thông tin và chính sách --> 
             <div class="col-lg-3 col-md-6 mb-4"> 
                 <h5 class="text-uppercase">Thông tin và chính sách</h5> 
                 <ul class="list-unstyled mb-0"> 
