@@ -9,7 +9,7 @@
     }
 
     .banner-image {
-        width: 80%;
+        width: 800%;
         max-width: 1200px;
         border-radius: 10px;
     }

@@ -114,7 +114,8 @@
                         <span class ="text-center">Hotline</span>
                         <b>1800.xxxx</b>       
                     </div>
-                    <a href="#" class="btn btn-white"><i class="bi bi-cart"></i></a>
+                   
+                    <a href= "app\views\pages\cart.php" class="btn btn-white"><i class="bi bi-cart"></i></a>
                     <a href="#" class="btn btn-dark"><i class="bi bi-person-square"></i></a>
                 </div>
             </div> 
