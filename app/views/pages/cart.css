@@ -3,7 +3,7 @@ body {
     margin: 0px 0px;
 }
 .container_cart{
-
+    padding-right: 10px 0;
     margin: auto;
     display: flex; 
     flex-wrap: nowrap;  
@@ -36,8 +36,12 @@ h2 {
 .cart-table, th, td, tr {
     width: 100%;    
     margin-top: 20px;
-    border: 0.5px solid rgb(49, 187, 81);
+    border: 0.5px solid rgb(12, 12, 12);
 }
+.cart-table, th, td{
+   width: auto;
+}
+
 /*kẽ ngang*/
 .cart-table th, .cart-table td {
     border-bottom: 1px solid #121313;
@@ -46,7 +50,8 @@ h2 {
 }
 
 .cart-table th {
-    background: #40ce42;
+    background: #efeeec;
+    font-size: 20px;
 }
 
 .cart-table img {
@@ -63,32 +68,38 @@ h2 {
 }
 
 
-.cart-table button {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #0c0c0c;
-    background: white;
-    cursor: pointer;
+.cart-table button {   
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100px;
 }
 
 .cart-table input { 
-    width: 40px;
+    width: 30px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: none;
+    font-size: 16px;
+    outline: none;
 }
 
-
+.plus_minus{
+    width: 30px !important;
+}
 
 .total {
     color: #181a19;
     font-size: 30px;
+    display: flex;
+    justify-items: flex-end;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 10px; /* Khoảng cách giữa các phần tử */
+    float: right;
+}
+.total_amout{
+    padding: 5px 5px; /* Khoảng cách giữa các phần tử */
 }
 .checkout-btn{
-    background-color: blueviolet;
-    
+    float: right;
+    background-color: rgb(223, 216, 201);
+    margin-bottom: 50px;
 }

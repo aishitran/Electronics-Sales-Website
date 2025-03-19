@@ -1,10 +1,10 @@
-
+<?php @include '../shares/header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng</title>
+   
     <link rel="stylesheet" href="cart.css">
       <!--Boostrap CSS-->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -14,7 +14,7 @@
 <body>
 
 
-<?php @include '../shares/header.php'; ?>
+
 
 
 
@@ -66,11 +66,11 @@
                 </td>
                 <td>" . number_format($item["price"], 0, ',', '.') . "đ</td>
                 <td>
-                    <div class='buttonthembot'>
-                    <button>-</button>
+                <div class='buttonthembot'>
+                    <button class='plus_minus'>-</button>
                     <input type='text' value='{$item["quantity"]}' readonly>
-                    <button>+</button>
-                    </div>
+                    <button class='plus_minus'>+</button>
+                </div>
                 </td>
                 <td>" . number_format($subtotal, 0, ',', '.') . "đ</td>
             </tr>";
@@ -80,8 +80,12 @@
 </table>
 
 <div class="total">
+        <div class="total_amount">
         <p><strong>Tổng tiền:</strong> <?php echo number_format($total, 0, ',', '.'); ?>đ</p>
+        </div>
+        <div>
         <button class="checkout-btn">Thanh toán</button>
+        </div>
     </div>
     </div>
     
