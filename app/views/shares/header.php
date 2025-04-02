@@ -2,6 +2,32 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require_once __DIR__ . '/../../models/ProductModel.php';
+$productModel = new ProductModel();
+
+// Function to get user ID from session
+function getUserId() {
+    return isset($_SESSION['user']['MaNguoiDung']) ? $_SESSION['user']['MaNguoiDung'] : null;
+}
+
+// Calculate cart count (single calculation)
+$cartCount = 0;
+$userId = getUserId();
+
+if ($userId) {
+    // Logged-in user: Fetch cart count from database
+    $cartItems = $productModel->getCartByUserId($userId);
+    foreach ($cartItems as $item) {
+        $cartCount += $item['SoLuong']; // Use 'SoLuong' from CART table
+    }
+} else {
+    // Guest user: Calculate cart count from session
+    if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $item) {
+            $cartCount += $item['quantity'] ?? 0; // Use 'quantity' from session
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,99 +35,15 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý sản phẩm</title>
+    <title>Temp<?= isset($pageTitle) ? ' - ' . htmlspecialchars($pageTitle) : '' ?></title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <style>
-        body {
-            background-color:rgb(255, 255, 255);
-            color: white;
-        }
-
-        /* Navbar Top */
-        .navbar-top {
-            background-color: #2E1A16; 
-            padding: 10px 0;
-        }
-
-        .navbar-top .nav-link, .navbar-top .btn {
-            color: white;
-            transition: 0.3s;
-        }
-
-        .navbar-top .nav-link:hover, .navbar-top .btn:hover {
-            color: #bbbbbb;
-        }
-
-        /* Search Bar */
-        .search-box {
-            max-width: 500px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            background:rgb(255, 255, 255);
-            border-radius: 20px;
-            padding: 5px 15px;
-        }
-
-        .search-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            color: white;
-            flex-grow: 1;
-        }
-
-        .search-box input::placeholder {
-            color: #a0a0a0;
-        }
-
-        .search-box button {
-            background: none;
-            border: none;
-            color: #a0a0a0;
-        }
-
-        /* Cart Badge */
-        .badge.bg-danger {
-            background-color: red !important;
-        }
-
-        /* Navbar Bottom */
-        .navbar-bottom {
-            background-color: #2E1A16; 
-            padding: 10px 0;
-            border-top: 1px solid rgb(255, 255, 255); 
-        }
-
-        /* Navbar Links Styling */
-        .navbar-bottom .nav-link {
-            color: #d1cfcf;
-            transition: color 0.3s;
-        }
-
-        .navbar-bottom .nav-link:hover {
-            color: #f0a500;
-        }
-
-        /* Dropdown */
-        .dropdown-menu {
-            background-color: #2E1A16;
-        }
-
-        .dropdown-menu .dropdown-item {
-            color: white;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #3A2A28;
-        }
-    </style>
+    <link rel="stylesheet" href="app/public/css/style.css">
 </head>
 <body>
 
@@ -109,42 +51,46 @@ if (session_status() == PHP_SESSION_NONE) {
     <nav class="navbar navbar-expand-lg navbar-top">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <img src="CHUACO.png" alt="MACBOOK" height="40">
+            <a class="navbar-brand" href="/index.php">
+                <img src="/app/images/logo.jpg" alt="Temp" height="40">
             </a>
 
             <!-- Search Bar -->
             <div class="search-box w-50">
-            <button><i class="fas fa-search"></i></button>
-            <input type="text" placeholder="Bạn đang tìm kiếm gì?">
+                <button><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Bạn đang tìm kiếm gì?">
             </div>
 
             <!-- Right-side Nav -->
-            <ul class="navbar-nav ms-auto"> 
-                <li class="nav-item me-3">
-                    <?php
-                    if (isset($_SESSION['username'])) {
-                        echo "<a class='nav-link'><strong>" . $_SESSION['username'] . "</strong></a>";
-                    } else {
-                        echo "<a class='btn btn-outline-light' href='/project1/account/login'>Login</a>";
-                    }
-                    ?>
-                </li>
-                <li class="nav-item me-3">
-                    <?php
-                    if (isset($_SESSION['username'])) {
-                        echo "<a class='btn btn-outline-light ms-2' href='/project1/account/logout'>Logout</a>";
-                    }
-                    ?>
-                </li>
+            <ul class="navbar-nav ms-auto">
+                <?php if (isset($_SESSION['user'])): ?>
+                    <li class="nav-item me-3 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <strong><?= htmlspecialchars($_SESSION['user']['HoTen']) ?></strong>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <?php if ($_SESSION['user']['MaVaiTro'] == 2): ?>
+                            <li><a class="dropdown-item" href="/index.php?action=adminProducts">Quản Lý Sản Phẩm</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=adminCategories">Quản Lý Danh Mục</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=adminOrders">Quản Lý Đơn Hàng</a></li>
+                        <?php endif; ?>
+                            <li><a class="dropdown-item" href="/index.php?action=accountOrders">Xem Đơn Hàng</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=logout">Đăng Xuất</a></li>
+                        </ul>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item me-3">
+                        <a class="btn btn-outline-light" href="/index.php?action=login">Đăng Nhập</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="btn btn-outline-light" href="/index.php?action=signup">Đăng Ký</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link position-relative" href="/project1/Product/cart">
+                    <a class="nav-link position-relative" href="/index.php?action=cart">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="position-absolute top-90 start-90 translate-middle badge bg-danger">
-                            <?php 
-                            $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0;
-                            echo $cart_count;
-                            ?>
+                            <?= htmlspecialchars($cartCount) ?>
                         </span>
                     </a>
                 </li>
@@ -157,26 +103,35 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="container">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Trang chủ</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Danh mục
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <li><a class="dropdown-item" href="#">Tai nghe</a></li>
-                        <li><a class="dropdown-item" href="#">Bàn phím</a></li>
-                        <li><a class="dropdown-item" href="#">Chuột</a></li>
-                    </ul>
+                    <a class="nav-link" href="/index.php">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Liên hệ</a>
+                    <a class="nav-link" href="/index.php?action=contact">Liên hệ</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <?php if (isset($pageTitle) && $pageTitle !== 'Trang Chủ'): ?>
+                    <!-- Breadcrumb for pages other than homepage -->
+                    <li class="breadcrumb-item"><a href="/index.php">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <?= htmlspecialchars($pageTitle) ?>
+                    </li>
+                <?php else: ?>
+                    <!-- Breadcrumb for homepage -->
+                    <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
+                <?php endif; ?>
+            </ol>
+        </div>
+    </nav>
+
+
+    <!-- Bootstrap JavaScript (moved to footer if needed, but kept here for completeness) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

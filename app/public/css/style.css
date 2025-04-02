@@ -1,0 +1,326 @@
+.home-image {
+    max-width: 400px;
+    width: 70%;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+/*Banner*/
+.banner-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.banner-image {
+    width: 80%;
+    max-width: 1200px;
+    border-radius: 10px;
+}
+
+/* Slider */
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.slider-images {
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-images .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slider-images .slide.active {
+    opacity: 1;
+}
+
+/* Centered slider dot */
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.slider-dots .dot.active {
+    background-color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #2E1A16;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 350px; /* Extend the sidebar height */
+}
+
+.sidebar h5 {
+    color: white;
+    font-weight: bold;
+}
+
+.sidebar .list-group-item a {
+    text-decoration: none;
+    color: #333;
+}
+.sidebar .list-group-item a:hover {
+        color: #ff6600;
+}
+
+/*Image nhỏ bên hông*/
+.promo-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.promo-container a img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Danh mục icons */
+.category-bar {
+    position: relative;
+    top: -150px;
+    max-width: 50%;
+    margin: 4px auto;
+    padding: 15px 10px;
+    background-color: #2E1A16;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-bar div {
+    text-align: center;
+    flex: 1;
+    color:rgb(255, 255, 255)
+}
+
+.category-bar a {
+    text-decoration: none; /* Remove underline */
+    color: rgb(255, 255, 255); /* Match text color to white */
+    display: flex; /* Align icon and text vertically */
+    flex-direction: column; /* Stack icon above text */
+    align-items: center; /* Center horizontally */
+}
+
+.category-bar a:hover {
+    color: #f0a500; /* Optional: Change color on hover to match your theme */
+}
+
+.category-bar i {
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+}
+
+.category-bar p {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Category Buttons */
+.category-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.category-btn {
+    background-color: #2E1A16; /* Match your theme */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.category-btn:hover {
+    background-color: #3A2A28; /* Slightly lighter on hover */
+    transform: scale(1.05); /* Slight scale-up effect */
+}
+
+.category-btn.active {
+    background-color: #f0a500; /* Highlight color for selected state */
+    color: #fff;
+    font-weight: bold; /* Emphasize selected button */
+}
+
+/* Navbar Top */
+.navbar-top {
+    background-color: #2E1A16;
+    padding: 10px 0;
+}
+
+.navbar-top .nav-link, .navbar-top .btn {
+    color: white;
+    transition: color 0.3s;
+}
+
+.navbar-top .nav-link:hover, .navbar-top .btn:hover {
+    color: #bbbbbb;
+}
+
+/* Search Bar */
+.search-box {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    flex-grow: 1;
+}
+
+.search-box input::placeholder {
+    color: #a0a0a0;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+}
+
+/* Cart Badge */
+.badge.bg-danger {
+    background-color: red !important;
+}
+
+/* Navbar Bottom */
+.navbar-bottom {
+    background-color: #2E1A16;
+    padding: 5px 0;
+    border-top: 1px solid #fff;
+}
+
+.navbar-bottom .navbar-nav {
+    width: 100%;
+    justify-content: flex-start; /* Align items to the left */
+}
+
+.navbar-bottom .nav-link {
+    color: #d1cfcf;
+    font-size: 16px;
+    padding: 5px 15px;
+    transition: color 0.3s;
+}
+
+.navbar-bottom .nav-link:hover {
+    color: #f0a500;
+}
+
+.navbar-bottom .dropdown-menu {
+    background-color: #2E1A16;
+    border: none;
+}
+
+.navbar-bottom .dropdown-item {
+    color: white;
+    padding: 5px 15px;
+}
+
+.navbar-bottom .dropdown-item:hover {
+    background-color: #3A2A28;
+    color: #f0a500;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: transparent;
+    padding: 15px 15px;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #333;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+}
+
+/* Ensure images fit well in their containers */
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Homepage product cards */
+.card .product-image {
+    height: 200px;
+}
+
+/* Product details page */
+.product-detail-image {
+    width: 100%;
+    max-height: 358px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Admin and cart thumbnails */
+.thumbnail-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+}

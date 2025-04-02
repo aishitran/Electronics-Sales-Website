@@ -1,10 +1,10 @@
-<footer class="text-light pt-4 pb-3" style="background-color: #2E1A16;"> 
+<footer class="text-light pt-4 pb-3 mt-5" style="background-color: #2E1A16;"> 
     <div class="container"> 
         <div class="row"> 
             <!-- Thông tin liên hệ -->
             <div class="col-lg-3 col-md-6 mb-4"> 
                 <h5 class="text-uppercase fw-bold">THÔNG TIN LIÊN HỆ</h5> 
-                <p><strong>Tên công ty:</strong> Zken Mbook</p>
+                <p><strong>Tên công ty:</strong> temp</p>
                 <p><strong>Địa chỉ:</strong> 10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Thủ Đức, Hồ Chí Minh</p>
                 <p><strong>Email:</strong> cskh@temp.net</p>
                 <p><strong>Hotline:</strong> 02835120785</p>
@@ -51,9 +51,6 @@
                 </div>
             </div> 
         </div> 
-    </div> 
-    <div class="text-center p-3 bg-white text-white"> 
-        @ Bản quyền thuộc về dr026
     </div> 
 </footer> 
 

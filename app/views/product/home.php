@@ -6,177 +6,53 @@
     <title>Clone T-Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<style>
-    .home-image {
-        max-width: 400px;
-        width: 70%;
-        height: auto;
-        margin: 20px auto;
-        display: block;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        object-fit: cover;
-    }
-    /*Banner*/
-    .banner-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .banner-image {
-        width: 80%;
-        max-width: 1200px;
-        border-radius: 10px;
-    }
-
-    /*Slider*/
-    .slider-container {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .slider-images {
-        position: relative;
-        width: 80%;
-        height: 100%; /* Đặt chiều cao cố định */
-        overflow: hidden;
-    }
-
-    .slider-images .slide {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-    }
-
-    .slider-images .slide.active {
-        opacity: 1;
-    }
-
-    .slider-dots {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .slider-dots .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #ddd;
-        display: inline-block;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-
-    .slider-dots .dot.active {
-        background-color: #333;
-    }
-
-    .sidebar {
-        background-color:#2E1A16; 
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .sidebar h5 {
-        color: white;
-        font-weight: bold;
-    }
-
-    .sidebar .list-group-item a {
-        text-decoration: none;
-        color: #333;
-    }
-    .sidebar .list-group-item a:hover {
-            color: #ff6600;
-    }
-
-    /*Image nhỏ bên hông*/
-    .promo-container{
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .promo-container a img{
-        width: 100%;
-        border-radius: 10px;
-    }
-
-    /*Danh mục icons*/
-    .category-bar{
-        top: -170px;
-        max-width: 50%;
-        margin: 15px auto ;
-        padding: 15px 10px;
-        background-color:rgb(164, 231, 120);
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        position: relative;
-    }
-
-    .category-bar div{
-        text-align: center;
-    }
-
-    .category-bar i{
-        font-size: 24px;
-    }
-
-    .category-bar p{
-        font-size: 14px;
-        margin-top: 5px;
-    }
-
-    
-    
-</style>
+</head>
 <body>
-
 <!--Danh mục-->
 <div class="container mt-4 px-3">
     <div class="row">
-        <div class="col-md-3 ">
+        <div class="col-md-3">
             <div class="sidebar rounded shadow-sm">
-                    <h5><i class="bi bi-list"></i> Danh mục</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="#">Bàn phím</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Màn hình</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Laptop Gaming, văn phòng</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Gaming Gear</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Máy tính để bàn</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Linh kiện máy tính</a> <i class="bi bi-chevron-right"></i></li>
-                        <li class="list-group-item"><a href="#">Linh kiện khác</a> <i class="bi bi-chevron-right"></i></li>
-                    </ul>
+                <h5><i class="bi bi-list fs-4 mt-4 mb-3"></i> Danh mục</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=1">Bàn phím</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=2">Màn hình</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=3">Laptop Gaming, văn phòng</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=4">Gaming Gear</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=5">Máy tính để bàn</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=6">Linh kiện máy tính</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/index.php?action=viewCategory&id=7">Linh kiện khác</a> 
+                        <i class="bi bi-chevron-right"></i>
+                    </li>
+                </ul>
             </div>
-            <!--Sản phẩm nổi bật -->
-            <!--<h3 class="featured-products-title mt-4">Sản phẩm nổi bật <i class="bi bi-fire text-danger"></i></h3>-->
         </div>
 
         <div class="col-md-6">
-            <!--<h2>Không mua ở đây thì mua ở đâu?</h2>-->
             <div class="slider-container">
                 <div class="slider-images">
-                    <img src="https://i.imgur.com/eOrOjIv.png" alt="Image 1" data-slide="0" class="slide active">
-                    <img src="https://i.imgur.com/wBYX31O.png" alt="Image 2" data-slide="1" class="slide">
-                    <img src="https://i.imgur.com/qaoFYfj.png" alt="Image 3" data-slide="2" class="slide">
+                    <img src="/app/images/1st-1200x300.jpg" alt="Image 1" data-slide="0" class="slide active">
+                    <img src="/app/images/2nd-1200x300.jpg" alt="Image 2" data-slide="1" class="slide">
+                    <img src="/app/images/3rd-1200x300.jpg" alt="Image 3" data-slide="2" class="slide">
                 </div>
                 <div class="slider-dots">
                     <span class="dot active" data-slide="0"></span>
@@ -192,16 +68,100 @@
         </div>
     </div>
 
-        <!--Danh mục nhỏ dưới slider -->
-        <div class="category-bar">
-            <div><i class = "fas fa-laptop"><p>Laptop</p></i></div>
-            <div><i class = "fas fa-keyboard"> <p>Bàn phím</p></i></div>
-            <div><i class = "fas fa-display"> <p>Màn hình</p></i></div>
+    <!--Danh mục nhỏ dưới slider -->
+    <div class="category-bar">
+        <div>
+            <a href="/index.php?action=viewCategory&id=3">
+                <i class="fas fa-laptop"></i>
+                <p>Laptop</p>
+            </a>
         </div>
-</div>
+        <div>
+            <a href="/index.php?action=viewCategory&id=1">
+                <i class="fas fa-keyboard"></i>
+                <p>Bàn phím</p>
+            </a>
+        </div>
+        <div>
+            <a href="/index.php?action=viewCategory&id=2">
+                <i class="fas fa-display"></i>
+                <p>Màn hình</p>
+            </a>
+        </div>
+    </div>
 
-<div class="banner-container">
-    <img src="https://www.istore.com.ng/cdn/shop/files/MacBook_Air_M3_Now_Available_Desktop_Banner_2000x.jpg?v=1711115634" alt="MacBook Air" class="banner-image">
+    <div class="container border rounded p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold fs-4"><i class="bi bi-list"></i> Danh Sách Sản Phẩm</h5>
+            <a href="/index.php?action=viewAllProduct" class="text-decoration-none">Xem tất cả -></a>
+        </div>
+        <div class="d-flex flex-nowrap justify-content-start gap-3">
+            <?php 
+            $productCount = 0;
+            foreach ($products as $product): 
+                if ($productCount >= 4) break;
+                $productCount++;
+            ?>
+                <div class="col-md-3" style="flex: 0 0 calc(25% - 12px); max-width: calc(25% - 12px);">
+                    <div class="card h-100">
+                        <?php if (!empty($product['HinhAnh']) && file_exists('public/' . $product['HinhAnh'])): ?>
+                            <img src="/public/<?= htmlspecialchars($product['HinhAnh']) ?>" class="card-img-top product-image" alt="<?= htmlspecialchars($product['TenSanPham']) ?>">
+                        <?php else: ?>
+                            <img src="https://via.placeholder.com/200" class="card-img-top product-image" alt="No Image">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <a href="/index.php?action=viewProduct&id=<?= htmlspecialchars($product['MaSanPham'] ?? '') ?>" class="text-decoration-none">
+                                <?= htmlspecialchars($product['TenSanPham'] ?? 'Sản phẩm không có tên') ?>
+                            </a>
+                            <p class="card-text"><?= htmlspecialchars($product['MoTa']) ?></p>
+                            <p class="card-text"><strong>Giá:</strong> <?= number_format($product['Gia'], 0, ',', '.') ?> VND</p>
+                            <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="container border rounded p-3 mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold fs-4"><i class="bi bi-heart"></i> Bạn có thể thích ?</h5>
+            <a href="/index.php?action=viewAllProduct" class="text-decoration-none">Xem tất cả -></a>
+        </div>
+        <!-- Category Buttons -->
+        <div class="category-buttons mt-2 d-flex gap-2">
+            <button class="btn category-btn active" data-category="1">Bàn phím</button>
+            <button class="btn category-btn" data-category="2">Màn hình</button>
+            <button class="btn category-btn" data-category="3">Laptop</button>
+            <button class="btn category-btn" data-category="4">Gaming Gear</button>
+        </div>
+        <div class="d-flex flex-wrap justify-content-start gap-3 mt-3" id="youMayLikeProducts">
+            <?php 
+            $productCount = 0;
+            foreach ($products as $product): 
+                if ($productCount >= 8) break; // Limit to 8 products
+                $productCount++;
+            ?>
+                <div class="col-md-3" style="flex: 0 0 calc(25% - 12px); max-width: calc(25% - 12px);" data-category="<?= htmlspecialchars($product['MaDanhMuc'] ?? '') ?>">
+                    <div class="card h-100">
+                        <?php if (!empty($product['HinhAnh']) && file_exists('public/' . $product['HinhAnh'])): ?>
+                            <img src="/public/<?= htmlspecialchars($product['HinhAnh']) ?>" class="card-img-top product-image" alt="<?= htmlspecialchars($product['TenSanPham']) ?>">
+                        <?php else: ?>
+                            <img src="https://via.placeholder.com/200" class="card-img-top product-image" alt="No Image">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <a href="/index.php?action=viewProduct&id=<?= htmlspecialchars($product['MaSanPham'] ?? '') ?>" class="text-decoration-none">
+                                <?= htmlspecialchars($product['TenSanPham'] ?? 'Sản phẩm không có tên') ?>
+                            </a>
+                            <p class="card-text"><?= htmlspecialchars($product['MoTa']) ?></p>
+                            <p class="card-text"><strong>Giá:</strong> <?= number_format($product['Gia'], 0, ',', '.') ?> VND</p>
+                            <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </div>
 
 <!--Script chuyển động slider sản phẩm-->
@@ -209,6 +169,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         const dots = document.querySelectorAll('.slider-dots .dot');
         const slides = document.querySelectorAll('.slider-images .slide');
+        const buttons = document.querySelectorAll('.category-btn');
+        const products = document.querySelectorAll('#youMayLikeProducts .col-md-3');
         let currentSlide = 0;
         let slideInterval;
 
@@ -247,6 +209,33 @@
             });
         });
 
+        // Filter products based on selected category
+        function filterProducts(selectedCategory) {
+            products.forEach(product => {
+                const productCategory = product.getAttribute('data-category');
+                if (productCategory === selectedCategory) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Handle button clicks
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove 'active' class from all buttons
+                buttons.forEach(btn => btn.classList.remove('active'));
+                // Add 'active' class to clicked button
+                this.classList.add('active');
+                // Filter products based on selected category
+                const category = this.getAttribute('data-category');
+                filterProducts(category);
+            });
+        });
+
+        // Initial filter (default to first category, "Bàn phím")
+        filterProducts('1');
         // Bắt đầu tự động chạy slider
         startAutoSlide();
     });
