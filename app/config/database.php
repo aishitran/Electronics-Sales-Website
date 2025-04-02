@@ -7,18 +7,19 @@ class Database {
     private $conn;
 
     public function getConnection() {
-        $this->conn = null;
-        try {
-            // Use the correct DSN for SQL Server
-            $this->conn = new PDO("sqlsrv:Server=" . $this->host . ";Database=" . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "✅ Connected successfully to SQL Server!";
-        } catch (PDOException $exception) {
-            echo "❌ Connection error: " . $exception->getMessage();
+        if (!isset($this->conn)) {
+            try {
+                $dsn = "sqlsrv:Server=$this->host;Database=$this->db_name";
+                $this->conn = new PDO($dsn, $this->username, $this->password);
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $exception) {
+                die("❌ Không thể kết nối CSDL: " . $exception->getMessage());
+            }
         }
         return $this->conn;
     }
 }
+
 
 /* 
 1. Enable SQL Server Authentication (If Not Enabled)
