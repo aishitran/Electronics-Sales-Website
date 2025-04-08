@@ -61,21 +61,6 @@
     <div class="login-container">
         <h2>ĐĂNG NHẬP</h2>
         <p>Nếu bạn chưa có tài khoản, đăng ký tại đây</p>
-        
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger">
-                <?= htmlspecialchars($_SESSION['error']) ?>
-                <?php unset($_SESSION['error']); ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success">
-                <?= htmlspecialchars($_SESSION['success']) ?>
-                <?php unset($_SESSION['success']); ?>
-            </div>
-        <?php endif; ?>
-        
         <form method="POST" action="/index.php?action=login">
             <div class="mb-3">
                 <input type="email" class="form-control" name="email" placeholder="Email" required>

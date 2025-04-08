@@ -61,7 +61,6 @@
     <div class="signup-container">
         <h2>ĐĂNG KÝ</h2>
         <p>Đã có tài khoản, đăng nhập tại đây</p>
-        
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger">
                 <?= htmlspecialchars($_SESSION['error']) ?>
@@ -72,7 +71,6 @@
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success">
                 <?= htmlspecialchars($_SESSION['success']) ?>
-                <?php unset($_SESSION['success']); ?>
             </div>
         <?php endif; ?>
         
