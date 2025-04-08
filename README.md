@@ -1,65 +1,45 @@
-# Electronics Sales Website
+1. Enable SQL Server Authentication (If Not Enabled)
+By default, SQL Server only allows Windows Authentication. To enable SQL Server Authentication, follow these steps:
 
-## Development Server
-```bash
-php -S localhost:8000
-```
+Open SQL Server Management Studio (SSMS).
 
-## Unused Functions and Views
+Connect to your SQL Server instance.
 
-### Potentially Unused Functions
+In Object Explorer, right-click on the server (e.g., localhost or SQLEXPRESS) → Properties.
 
-#### In ProductModel.php:
-- `getUserById()` - Appears to be misplaced in ProductModel, should be in UserModel
-- `updateUserInfo()` - Appears to be misplaced in ProductModel, should be in UserModel
-- `registerUser()` - Appears to be misplaced in ProductModel, should be in UserModel
-- `loginUser()` - Appears to be misplaced in ProductModel, should be in UserModel
+Go to the Security tab.
 
-#### In OrderController.php:
-- `deleteOrder()` - Duplicate function, appears twice (lines 99 and 204)
+Under Server authentication, select SQL Server and Windows Authentication mode.
 
-#### In ProductController.php:
-- `adminPanel()` - May be unused if admin functionality is handled elsewhere
-- `createProduct()` - May be unused if product creation is handled through a different interface
+Click OK.
 
-### Code Organization Issues
+Restart SQL Server:
 
-1. User-related functions are incorrectly placed in ProductModel.php
-2. Duplicate function definitions in OrderController.php
-3. Some admin-related functions may be redundant or misplaced
+Open SQL Server Configuration Manager.
 
-### Recommendations
+Go to SQL Server Services → Right-click on SQL Server (MSSQLSERVER) → Restart.
 
-1. Move user-related functions from ProductModel.php to a dedicated UserModel.php
-2. Remove duplicate deleteOrder() function in OrderController.php
-3. Review and potentially consolidate admin-related functions
-4. Consider implementing proper dependency injection for database connections
-5. Review and potentially remove unused admin panel functions if they're handled elsewhere
+2. Enable 'sa' Account & Reset Password
+If you still get the error, the 'sa' account might be disabled. To enable it:
 
-Note: This analysis is based on static code review. Some functions may be used through dynamic calls or AJAX requests not visible in the static analysis.
+Open SSMS and connect as Windows Authentication.
 
-## Potentially Unused or Inaccessible Views
+In Object Explorer, expand Security → Logins.
 
-### Admin Views
-- `admin_products.php` - Appears to be redundant as product management is handled through `admin_panel.php`
-- `admin_orders.php` - May be redundant as order management is also handled through `admin_panel.php`
+Right-click on sa → Properties.
 
-### Product Views
-- `contact.php` - No direct route found in the main routing system, may be inaccessible
-- `search_results.php` - Search functionality may not be fully implemented as there's no search form in the main navigation
+In the General tab:
 
-### Order Views
-- `order_status.php` - May be partially implemented as the status update functionality in OrderController appears incomplete
+Set a new password for the sa account.
 
-### Authentication Views
-- `account_info.php` - Some user-related functions are misplaced in ProductModel, which may affect the functionality of this view
+Confirm the password.
 
-### Recommendations for Views
-1. Consolidate admin views into a single admin panel interface
-2. Implement proper routing for the contact page
-3. Complete the search functionality implementation
-4. Move user-related functions to appropriate models
-5. Review and potentially remove redundant admin views
-6. Ensure all views have proper access controls and error handling
+In the Status tab:
 
-Note: This analysis is based on static code review. Some views may be accessed through dynamic routes or AJAX requests not visible in the static analysis.
+Set Login to Enabled.
+
+Click OK.
+
+Restart SQL Server.
+
+3. Use insert_admin.php for admin account create

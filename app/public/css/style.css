@@ -563,3 +563,33 @@
     background-color: #f8f9fa !important;
     border: 1px solid #0d6efd;
 }
+
+/* Fix for navbar-top dropdown menus */
+.navbar-top .dropdown-toggle:active,
+.navbar-top .dropdown-toggle:focus,
+.navbar-top .dropdown-toggle.show,
+.navbar-top .dropdown-toggle.active {
+    color: white !important;
+}
+
+.navbar-top .dropdown-toggle:active:hover,
+.navbar-top .dropdown-toggle:focus:hover,
+.navbar-top .dropdown-toggle.show:hover,
+.navbar-top .dropdown-toggle.active:hover {
+    color: #bbbbbb !important;
+}
+
+/* Specific fix for user dropdown in top navbar */
+#userDropdown:active,
+#userDropdown:focus,
+#userDropdown.show,
+#userDropdown.active {
+    color: white !important;
+}
+
+#userDropdown:active:hover,
+#userDropdown:focus:hover,
+#userDropdown.show:hover,
+#userDropdown.active:hover {
+    color: #bbbbbb !important;
+}
