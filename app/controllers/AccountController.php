@@ -64,7 +64,9 @@ class AccountController {
      */
     public function signup() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $hoTen = $_POST['hoTen'] ?? '';
+            $ho = $_POST['ho'] ?? '';
+            $ten = $_POST['ten'] ?? '';
+            $hoTen = $ho . ' ' . $ten; // Merge Họ and Tên
             $email = $_POST['email'] ?? '';
             $matKhau = $_POST['matKhau'] ?? '';
             $soDienThoai = $_POST['soDienThoai'] ?? '';

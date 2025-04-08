@@ -59,16 +59,19 @@
         <?php endif; ?>
         <form method="POST" action="/index.php?action=signup">
             <div class="mb-3">
-                <input type="text" class="form-control" name="hoTen" placeholder="Họ" required>
+                <input type="text" class="form-control" name="ho" placeholder="Họ" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="hoTen" placeholder="Tên" required>
+                <input type="text" class="form-control" name="ten" placeholder="Tên" required>
             </div>
             <div class="mb-3">
                 <input type="email" class="form-control" name="email" placeholder="Email" required>
             </div>
             <div class="mb-3">
                 <input type="text" class="form-control" name="soDienThoai" placeholder="Số điện thoại">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" name="diaChi" placeholder="Địa chỉ" required>
             </div>
             <div class="mb-3">
                 <input type="password" class="form-control" name="matKhau" placeholder="Mật khẩu" required>
