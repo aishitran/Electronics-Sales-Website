@@ -1,6 +1,23 @@
 <?php
 require_once "app/config/database.php";
 
+/**
+ * CategoryModel handles all category-related database operations
+ * 
+ * This model manages:
+ * - Database interactions for categories table
+ * - Relationships with:
+ *   - Products table (one-to-many)
+ * 
+ * Used by:
+ * - CategoryController for category management
+ * - ProductController for product categorization
+ * 
+ * Main functionalities:
+ * - Category CRUD operations
+ * - Product categorization
+ * - Category hierarchy management
+ */
 class CategoryModel {
     private PDO $conn;
 

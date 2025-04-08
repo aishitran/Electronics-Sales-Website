@@ -3,6 +3,22 @@ require_once 'app/models/ProductModel.php';
 require_once 'app/models/CategoryModel.php';
 require_once 'app/models/OrderModel.php';
 
+/**
+ * ProductController handles all product-related operations
+ * 
+ * This controller manages the interaction between:
+ * - ProductModel: For database operations related to products
+ * - Views: 
+ *   - /app/views/product/ for product-related views
+ *   - /app/views/cart/ for cart-related views
+ *   - /app/views/admin/ for admin product management views
+ * 
+ * Main functionalities:
+ * - Product CRUD operations
+ * - Cart management
+ * - Product search and filtering
+ * - Product category relationships
+ */
 class ProductController
 {
     private $productModel;

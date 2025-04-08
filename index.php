@@ -239,7 +239,7 @@ switch ($action) {
         break;
 
     case 'checkout':
-        require 'app/views/cart/checkout.php';
+        $orderController->showCheckout();
         break;
 
     case 'accountOrders':

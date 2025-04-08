@@ -2,6 +2,23 @@
 require_once "app/config/database.php";
 require_once "app/models/OrderModel.php";
 
+/**
+ * OrderController handles all order-related operations
+ * 
+ * This controller manages the interaction between:
+ * - OrderModel: For database operations related to orders
+ * - ProductModel: For product information in orders
+ * - Views:
+ *   - /app/views/order/ for order management views
+ *   - /app/views/cart/ for checkout process
+ *   - /app/views/admin/ for admin order management views
+ * 
+ * Main functionalities:
+ * - Order creation and management
+ * - Order status updates
+ * - Payment processing
+ * - Order history tracking
+ */
 class OrderController 
 {
     private PDO $conn;
@@ -193,7 +210,7 @@ class OrderController
     
             $this->conn->commit();
             $_SESSION['success'] = "Đơn hàng của bạn đã được tạo thành công! Mã chữ ký: $signature";
-            header("Location: /index.php?action=checkout&orderId=" . $order_id);
+            header("Location: /index.php?action=confirmPayment&orderId=" . $order_id);
             exit();
         } catch (Exception $e) {
             $this->conn->rollBack();
@@ -258,6 +275,12 @@ class OrderController
         exit();
     }
 
+    /**
+     * Used by:
+     * - app/views/order/order_status.php
+     * - app/views/order/order_history.php (when clicking on an order)
+     * Displays the status of a specific order
+     */
     public function showOrderStatus() {
         if (!isset($_SESSION['user'])) {
             header("Location: /index.php?action=login");
@@ -290,6 +313,12 @@ class OrderController
         }
     }
 
+    /**
+     * Used by:
+     * - app/views/order/order_history.php
+     * - app/views/layout/header.php (when accessing order history from navigation)
+     * Displays the order history for the current user
+     */
     public function orderHistory() {
         if (!isset($_SESSION['user'])) {
             header("Location: /index.php?action=login");
@@ -306,5 +335,52 @@ class OrderController
             header("Location: /index.php");
             exit();
         }
+    }
+
+    /**
+     * Used by:
+     * - app/views/cart/checkout.php
+     * Shows the checkout page with cart items
+     */
+    public function showCheckout() {
+        if (!isset($_SESSION['user'])) {
+            header("Location: /index.php?action=login");
+            exit();
+        }
+
+        $user_id = $_SESSION['user']['MaNguoiDung'];
+        
+        // Get cart items
+        $query = "SELECT c.MaSanPham, s.TenSanPham, s.Gia, c.SoLuong, s.HinhAnh 
+                  FROM CART c 
+                  JOIN SANPHAM s ON c.MaSanPham = s.MaSanPham 
+                  WHERE c.MaNguoiDung = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$user_id]);
+        $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($cartItems)) {
+            $_SESSION['error'] = "Giỏ hàng của bạn đang trống.";
+            header("Location: /index.php?action=cart");
+            exit();
+        }
+
+        // Calculate total
+        $total = 0;
+        foreach ($cartItems as $item) {
+            $total += $item['Gia'] * $item['SoLuong'];
+        }
+
+        // Generate a unique signature for the order
+        $signature = 'ORDER-' . time() . '-' . rand(1000, 9999);
+
+        // Create a temporary order for display
+        $order = [
+            'MaDonHang' => 'TEMP-' . time(),
+            'TongTien' => $total,
+            'ChuKy' => $signature
+        ];
+
+        require_once 'app/views/cart/checkout.php';
     }
 }

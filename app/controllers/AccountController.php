@@ -3,6 +3,22 @@ require_once('app/config/database.php');
 require_once('app/models/AccountModel.php');  
 require_once('app/models/ProductModel.php');
 
+/**
+ * AccountController handles all user account-related operations
+ * 
+ * This controller manages the interaction between:
+ * - AccountModel: For database operations related to user accounts
+ * - Views:
+ *   - /app/views/auth/ for login/signup views
+ *   - /app/views/order/ for user order history
+ *   - /app/views/admin/ for admin user management
+ * 
+ * Main functionalities:
+ * - User authentication (login/signup)
+ * - Account management
+ * - User profile updates
+ * - Order history access
+ */
 class AccountController {
     private $accountModel;
     private $productModel;
@@ -17,7 +33,7 @@ class AccountController {
     /**
      * Used by:
      * - app/views/auth/login.php
-     * - app/views/layout/header.php (when accessing login from navigation)
+     * - app/views/layout/header.php (when clicking login button)
      * Handles user login form submission and session management
      */
     public function login() {
@@ -59,7 +75,7 @@ class AccountController {
     /**
      * Used by:
      * - app/views/auth/signup.php
-     * - app/views/layout/header.php (when accessing signup from navigation)
+     * - app/views/layout/header.php (when clicking signup button)
      * Handles user registration form submission and account creation
      */
     public function signup() {
@@ -94,7 +110,7 @@ class AccountController {
 
     /**
      * Used by:
-     * - app/views/layout/header.php (when clicking logout)
+     * - app/views/layout/header.php (when clicking logout button)
      * - app/views/auth/account_info.php (when accessing logout option)
      * Handles user logout and session cleanup
      */
@@ -108,7 +124,7 @@ class AccountController {
     /**
      * Used by:
      * - app/views/auth/account_info.php
-     * - app/views/layout/header.php (when accessing account info from navigation)
+     * - app/views/layout/header.php (when clicking profile button)
      * Displays the user's account information page
      */
     public function showAccountInfo() {

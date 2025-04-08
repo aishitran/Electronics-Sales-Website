@@ -1,4 +1,22 @@
 <?php 
+/**
+ * AccountModel handles all user account-related database operations
+ * 
+ * This model manages:
+ * - Database interactions for users table
+ * - Relationships with:
+ *   - Orders table (one-to-many)
+ * 
+ * Used by:
+ * - AccountController for user management
+ * - OrderController for user order validation
+ * 
+ * Main functionalities:
+ * - User authentication
+ * - Account CRUD operations
+ * - User profile management
+ * - Order history access
+ */
 class AccountModel 
 { 
     private $conn; 

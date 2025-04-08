@@ -140,7 +140,7 @@
                 </tbody>
             </table>
             <a href="/index.php" class="btn btn-secondary">Tiếp Tục Mua Sắm</a>
-            <a href="/index.php?action=createOrder" class="btn btn-primary float-end">Thanh Toán</a>
+            <a href="/index.php?action=checkout" class="btn btn-primary float-end">Thanh Toán</a>
         <?php endif; ?>
     </div>
 

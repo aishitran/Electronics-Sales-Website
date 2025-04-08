@@ -4,22 +4,22 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+// If we have a real orderId, use that instead of the temporary order
 $orderId = $_GET['orderId'] ?? null;
-if (!$orderId) {
-    $_SESSION['error'] = "Không tìm thấy đơn hàng.";
-    header("Location: /index.php?action=cart");
-    exit();
-}
+if ($orderId) {
+    require_once 'app/models/OrderModel.php';
+    $orderModel = new OrderModel();
+    $order = $orderModel->getOrderById($orderId);
+    $items = $orderModel->getOrderItems($orderId);
 
-require_once 'app/models/OrderModel.php';
-$orderModel = new OrderModel();
-$order = $orderModel->getOrderById($orderId);
-$items = $orderModel->getOrderItems($orderId);
-
-if (!$order) {
-    $_SESSION['error'] = "Đơn hàng không tồn tại.";
-    header("Location: /index.php?action=cart");
-    exit();
+    if (!$order) {
+        $_SESSION['error'] = "Đơn hàng không tồn tại.";
+        header("Location: /index.php?action=cart");
+        exit();
+    }
+} else {
+    // Use the temporary order data prepared by showCheckout
+    $items = $cartItems;
 }
 ?>
 
@@ -90,7 +90,7 @@ if (!$order) {
         </div>
 
         <a href="/index.php?action=cart" class="btn btn-secondary">Quay lại</a>
-        <a href="/index.php?action=confirmPayment&orderId=<?= $orderId ?>" class="btn btn-success float-end">Xác Nhận Thanh Toán</a>
+        <a href="/index.php?action=createOrder" class="btn btn-success float-end">Xác Nhận Thanh Toán</a>
     </div>
 </body>
 </html>

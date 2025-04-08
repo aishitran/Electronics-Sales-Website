@@ -1,6 +1,20 @@
 <?php
 require_once 'app/models/CategoryModel.php';
 
+/**
+ * CategoryController handles all category-related operations
+ * 
+ * This controller manages the interaction between:
+ * - CategoryModel: For database operations related to categories
+ * - Views:
+ *   - /app/views/product/ for category display views
+ *   - /app/views/admin/ for admin category management views
+ * 
+ * Main functionalities:
+ * - Category CRUD operations
+ * - Product categorization
+ * - Category filtering and sorting
+ */
 class CategoryController 
 {
     private $categoryModel;

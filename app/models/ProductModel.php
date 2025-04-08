@@ -1,6 +1,26 @@
 <?php
 require_once "app/config/database.php";
 
+/**
+ * ProductModel handles all product-related database operations
+ * 
+ * This model manages:
+ * - Database interactions for products table
+ * - Relationships with:
+ *   - Categories table (many-to-one)
+ *   - Orders table (many-to-many through order_items)
+ * 
+ * Used by:
+ * - ProductController for product management
+ * - OrderController for order processing
+ * - CategoryController for product categorization
+ * 
+ * Main functionalities:
+ * - Product CRUD operations
+ * - Product search and filtering
+ * - Product-category relationships
+ * - Product inventory management
+ */
 class ProductModel
 {
     private PDO $conn;

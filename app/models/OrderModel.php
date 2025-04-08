@@ -1,6 +1,25 @@
 <?php
 require_once "app/config/database.php";
 
+/**
+ * OrderModel handles all order-related database operations
+ * 
+ * This model manages:
+ * - Database interactions for orders table
+ * - Relationships with:
+ *   - Products table (many-to-many through order_items)
+ *   - Users table (many-to-one)
+ * 
+ * Used by:
+ * - OrderController for order management
+ * - AccountController for user order history
+ * 
+ * Main functionalities:
+ * - Order CRUD operations
+ * - Order status management
+ * - Order history tracking
+ * - Order-item relationships
+ */
 class OrderModel {
     private PDO $conn;
 
