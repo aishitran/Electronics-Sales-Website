@@ -9,6 +9,13 @@ class CategoryController
         $this->categoryModel = new CategoryModel();
     }
 
+    /**
+     * Used by: 
+     * - app/views/admin/admin_categories.php
+     * - app/views/admin/admin_panel.php (when accessing categories section)
+     * - app/views/layout/header.php (when accessing categories from navigation)
+     * Displays all categories in the admin panel
+     */
     public function index() {
         if (!isset($_SESSION['user']) || $_SESSION['user']['MaVaiTro'] != 2) {
             error_log("Redirecting to login: " . print_r($_SESSION, true));
@@ -20,6 +27,13 @@ class CategoryController
         require_once 'app/views/admin/admin_categories.php';
     }
 
+    /**
+     * Used by: 
+     * - app/views/product/category_view.php
+     * - app/views/layout/header.php (when clicking on a category)
+     * - app/views/home/home.php (when clicking on a category)
+     * Displays products in a specific category with optional sorting and filtering
+     */
     public function viewCategory($id = null, $sort = '', $price = '') {
         $categories = $this->categoryModel->getAllCategories();
         
@@ -33,6 +47,12 @@ class CategoryController
         require_once 'app/views/product/category_view.php';
     }
     
+    /**
+     * Used by: 
+     * - app/views/admin/category_create.php
+     * - app/views/admin/admin_panel.php (when creating a new category)
+     * Handles the creation of a new category
+     */
     public function create() {
         if (!isset($_SESSION['user']) || $_SESSION['user']['MaVaiTro'] != 2) {
             error_log("Redirecting to login: " . print_r($_SESSION, true));
@@ -53,6 +73,12 @@ class CategoryController
         require_once 'app/views/admin/category_create.php';
     }
 
+    /**
+     * Used by: 
+     * - app/views/admin/category_edit.php
+     * - app/views/admin/admin_panel.php (when editing a category)
+     * Handles the editing of an existing category
+     */
     public function edit($id) {
         if (!isset($_SESSION['user']) || $_SESSION['user']['MaVaiTro'] != 2) {
             error_log("Redirecting to login: " . print_r($_SESSION, true));
@@ -63,7 +89,7 @@ class CategoryController
             $tenDanhMuc = $_POST['tenDanhMuc'];
             if ($this->categoryModel->updateCategory($id, $tenDanhMuc)) {
                 $_SESSION['success'] = 'Cập nhật danh mục thành công!';
-                header('Location: /index.php?action=adminCategories');
+                header('Location: /index.php?action=adminPanel&section=categories');
             } else {
                 $_SESSION['error'] = 'Cập nhật danh mục thất bại!';
                 header('Location: /index.php?action=editCategory&id=' . $id);
@@ -74,6 +100,12 @@ class CategoryController
         require_once 'app/views/admin/category_edit.php';
     }
 
+    /**
+     * Used by: 
+     * - app/views/admin/admin_categories.php
+     * - app/views/admin/admin_panel.php (when deleting a category)
+     * Handles the deletion of a category
+     */
     public function delete($id) {
         if (!isset($_SESSION['user']) || $_SESSION['user']['MaVaiTro'] != 2) {
             error_log("Redirecting to login: " . print_r($_SESSION, true));
@@ -85,7 +117,7 @@ class CategoryController
         } else {
             $_SESSION['error'] = 'Xóa danh mục thất bại!';
         }
-        header('Location: /index.php?action=adminCategories');
+        header('Location: /index.php?action=adminPanel&section=categories');
         exit;
     }
 }

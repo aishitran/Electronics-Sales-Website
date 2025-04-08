@@ -95,11 +95,15 @@
             <h5 class="fw-bold fs-4"><i class="bi bi-list"></i> Danh Sách Sản Phẩm</h5>
             <a href="/index.php?action=viewAllProduct" class="text-decoration-none">Xem tất cả -></a>
         </div>
-        <div class="d-flex flex-nowrap justify-content-start gap-3">
+        <div class="d-flex flex-wrap justify-content-start gap-3">
             <?php 
             $productCount = 0;
+            $hasProducts = false;
             foreach ($products as $product): 
-                if ($productCount >= 4) break;
+                // Skip products with zero quantity
+                if ($product['SoLuong'] <= 0) continue;
+                $hasProducts = true;
+                if ($productCount >= 8) break; // Increased from 4 to 8 products
                 $productCount++;
             ?>
                 <div class="col-md-3" style="flex: 0 0 calc(25% - 12px); max-width: calc(25% - 12px);">
@@ -115,11 +119,17 @@
                             </a>
                             <p class="card-text"><?= htmlspecialchars($product['MoTa']) ?></p>
                             <p class="card-text"><strong>Giá:</strong> <?= number_format($product['Gia'], 0, ',', '.') ?> VND</p>
-                            <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            <div class="d-flex gap-2">
+                                <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endforeach; 
+            if (!$hasProducts) {
+                echo "<p>Không có sản phẩm nào để hiển thị.</p>";
+            }
+            ?>
         </div>
     </div>
 
@@ -133,14 +143,25 @@
             <button class="btn category-btn active" data-category="1">Bàn phím</button>
             <button class="btn category-btn" data-category="2">Màn hình</button>
             <button class="btn category-btn" data-category="3">Laptop</button>
-            <button class="btn category-btn" data-category="4">Gaming Gear</button>
         </div>
         <div class="d-flex flex-wrap justify-content-start gap-3 mt-3" id="youMayLikeProducts">
             <?php 
             $productCount = 0;
+            $categoryCounts = [];
+            $hasProducts = false;
             foreach ($products as $product): 
-                if ($productCount >= 8) break; // Limit to 8 products
-                $productCount++;
+                // Skip products with zero quantity
+                if ($product['SoLuong'] <= 0) continue;
+                $hasProducts = true;
+                $categoryId = $product['MaDanhMuc'];
+                if (!isset($categoryCounts[$categoryId])) {
+                    $categoryCounts[$categoryId] = 0;
+                }
+                
+                // Only include up to 4 products per category
+                if ($categoryCounts[$categoryId] < 4) {
+                    $categoryCounts[$categoryId]++;
+                    $productCount++;
             ?>
                 <div class="col-md-3" style="flex: 0 0 calc(25% - 12px); max-width: calc(25% - 12px);" data-category="<?= htmlspecialchars($product['MaDanhMuc'] ?? '') ?>">
                     <div class="card h-100">
@@ -155,11 +176,19 @@
                             </a>
                             <p class="card-text"><?= htmlspecialchars($product['MoTa']) ?></p>
                             <p class="card-text"><strong>Giá:</strong> <?= number_format($product['Gia'], 0, ',', '.') ?> VND</p>
-                            <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            <div class="d-flex gap-2">
+                                <a href="/index.php?action=viewProduct&id=<?= $product['MaSanPham'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php 
+                }
+            endforeach; 
+            if (!$hasProducts) {
+                echo "<p>Không có sản phẩm nào để hiển thị.</p>";
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -211,33 +240,49 @@
 
         // Filter products based on selected category
         function filterProducts(selectedCategory) {
+            console.log("Filtering products for category:", selectedCategory);
+            let visibleCount = 0;
+            
             products.forEach(product => {
                 const productCategory = product.getAttribute('data-category');
+                console.log("Product category:", productCategory, "Selected category:", selectedCategory);
+                
                 if (productCategory === selectedCategory) {
                     product.style.display = 'block';
+                    visibleCount++;
+                    console.log("Product visible:", product.querySelector('a').textContent.trim());
                 } else {
                     product.style.display = 'none';
                 }
             });
+            
+            // If no products are visible for the selected category, show a message
+            if (visibleCount === 0) {
+                const noProductsMessage = document.createElement('div');
+                noProductsMessage.className = 'col-12 text-center mt-3';
+                noProductsMessage.textContent = 'Không có sản phẩm nào trong danh mục này.';
+                document.getElementById('youMayLikeProducts').appendChild(noProductsMessage);
+            }
         }
 
-        // Handle button clicks
+        // Handle category button clicks
         buttons.forEach(button => {
             button.addEventListener('click', function() {
-                // Remove 'active' class from all buttons
+                // Remove active class from all buttons
                 buttons.forEach(btn => btn.classList.remove('active'));
-                // Add 'active' class to clicked button
+                // Add active class to clicked button
                 this.classList.add('active');
                 // Filter products based on selected category
-                const category = this.getAttribute('data-category');
-                filterProducts(category);
+                const selectedCategory = this.getAttribute('data-category');
+                filterProducts(selectedCategory);
             });
         });
 
-        // Initial filter (default to first category, "Bàn phím")
-        filterProducts('1');
-        // Bắt đầu tự động chạy slider
+        // Start auto-sliding
         startAutoSlide();
+        
+        // Initialize with the first category (Bàn phím)
+        filterProducts('1');
     });
 </script>
 </body>

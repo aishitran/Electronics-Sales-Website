@@ -12,6 +12,13 @@ class OrderModel {
         }
     }
 
+    /**
+     * Used by:
+     * - OrderController::edit() -> app/views/admin/order_edit.php
+     * - OrderController::showOrderStatus() -> app/views/order/order_status.php
+     * 
+     * Retrieves all items in a specific order
+     */
     public function getOrderItems($orderId) {
         $stmt = $this->conn->prepare("
             SELECT ctdh.*, sp.TenSanPham 
@@ -23,18 +30,32 @@ class OrderModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    /**
+     * Used by:
+     * - OrderController::adminOrders() -> app/views/admin/admin_orders.php
+     * - OrderController::index() -> app/views/admin/admin_panel.php
+     * 
+     * Retrieves all orders from the database
+     */
     public function getAllOrders() {
         $stmt = $this->conn->query("
-            SELECT DH.*, ND.HoTen 
+            SELECT DH.*, ND.HoTen, ND.DiaChi 
             FROM DONHANG DH 
             JOIN NGUOIDUNG ND ON DH.MaNguoiDung = ND.MaNguoiDung
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Used by:
+     * - OrderController::edit() -> app/views/admin/order_edit.php
+     * - OrderController::showOrderStatus() -> app/views/order/order_status.php
+     * 
+     * Retrieves a specific order by its ID
+     */
     public function getOrderById($id) {
         $stmt = $this->conn->prepare("
-            SELECT DH.*, ND.HoTen 
+            SELECT DH.*, ND.HoTen, ND.DiaChi 
             FROM DONHANG DH 
             JOIN NGUOIDUNG ND ON DH.MaNguoiDung = ND.MaNguoiDung 
             WHERE DH.MaDonHang = ?
@@ -43,7 +64,13 @@ class OrderModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createOrder($userId, $cartItems) {
+    /**
+     * Used by:
+     * - OrderController::createOrder() -> app/views/cart/checkout.php
+     * - OrderController::confirmPayment() -> app/views/cart/payment_confirmation.php
+     * Creates a new order and its details in the database
+     */
+    public function createOrder($userId, $cartItems, $totalAmount) {
         $this->conn->beginTransaction();
 
         try {
@@ -67,17 +94,64 @@ class OrderModel {
     }
 
     
+    /**
+     * Used by:
+     * - OrderController::showOrderStatus() -> app/views/order/order_status.php
+     * - OrderController::showOrderHistory() -> app/views/order/order_history.php
+     * Retrieves all orders for a specific user
+     */
     public function getOrdersByUserId($userId) {
-        $stmt = $this->conn->prepare("SELECT * FROM DONHANG WHERE MaNguoiDung = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT * FROM DONHANG WHERE MaNguoiDung = :userId ORDER BY NgayDatHang DESC";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getOrdersByUserId: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Used by:
+     * - OrderController::showOrderStatus() -> app/views/order/order_status.php
+     * - OrderController::showOrderDetails() -> app/views/order/order_details.php
+     * Retrieves all details for a specific order
+     */
+    public function getOrderDetails($orderId) {
+        try {
+            $sql = "SELECT ct.*, sp.TenSanPham 
+                    FROM CHITIETDONHANG ct 
+                    JOIN SANPHAM sp ON ct.MaSanPham = sp.MaSanPham 
+                    WHERE ct.MaDonHang = :orderId";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getOrderDetails: " . $e->getMessage());
+            throw $e;
+        }
     }
     
+    /**
+     * Used by:
+     * - OrderController::edit() -> app/views/admin/order_edit.php
+     * - OrderController::updateOrderStatus() -> app/views/admin/admin_panel.php
+     * Updates the status of an order
+     */
     public function updateOrder($id, $trangThai) {
         $stmt = $this->conn->prepare("UPDATE DONHANG SET TrangThai = ? WHERE MaDonHang = ?");
         return $stmt->execute([$trangThai, $id]);
     }
 
+    /**
+     * Used by:
+     * - OrderController::delete() -> app/views/admin/admin_orders.php
+     * - OrderController::deleteOrder() -> app/views/admin/admin_panel.php
+     * Deletes an order from the database
+     */
     public function deleteOrder($id) {
         $stmt = $this->conn->prepare("DELETE FROM DONHANG WHERE MaDonHang = ?");
         return $stmt->execute([$id]);

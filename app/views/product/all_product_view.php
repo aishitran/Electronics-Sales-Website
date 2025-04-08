@@ -53,7 +53,11 @@ $pageTitle = 'Tất Cả Sản Phẩm';
                 <div class="d-flex flex-wrap justify-content-start gap-3">
                     <?php 
                     if (!empty($products)) {
+                        $hasProducts = false;
                         foreach ($products as $product): 
+                            // Skip products with zero quantity
+                            if ($product['SoLuong'] <= 0) continue;
+                            $hasProducts = true;
                     ?>
                         <div class="col-md-4" style="flex: 0 0 calc(33.33% - 12px); max-width: calc(33.33% - 12px);">
                             <div class="card h-100">
@@ -74,6 +78,9 @@ $pageTitle = 'Tất Cả Sản Phẩm';
                         </div>
                     <?php 
                         endforeach; 
+                        if (!$hasProducts) {
+                            echo "<p>Không có sản phẩm nào để hiển thị.</p>";
+                        }
                     } else {
                         echo "<p>Không có sản phẩm nào để hiển thị.</p>";
                     }

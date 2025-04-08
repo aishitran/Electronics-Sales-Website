@@ -1,3 +1,7 @@
+/* ===== GENERAL STYLES ===== */
+/* These styles apply across multiple views */
+
+/* Homepage image styles */
 .home-image {
     max-width: 400px;
     width: 70%;
@@ -9,7 +13,7 @@
     object-fit: cover;
 }
 
-/*Banner*/
+/* Banner styles - Used on homepage */
 .banner-container {
     width: 100%;
     display: flex;
@@ -24,7 +28,7 @@
     border-radius: 10px;
 }
 
-/* Slider */
+/* Slider styles - Used on homepage */
 .slider-container {
     position: relative;
     width: 100%;
@@ -56,7 +60,7 @@
     opacity: 1;
 }
 
-/* Centered slider dot */
+/* Slider navigation dots */
 .slider-dots {
     position: absolute;
     bottom: 20px;
@@ -80,12 +84,13 @@
     background-color: #333;
 }
 
-/* Sidebar */
+/* ===== SIDEBAR STYLES ===== */
+/* Used on category pages and product listing pages */
 .sidebar {
     background-color: #2E1A16;
     padding: 10px;
     border-radius: 5px;
-    min-height: 350px; /* Extend the sidebar height */
+    min-height: 350px;
 }
 
 .sidebar h5 {
@@ -98,10 +103,10 @@
     color: #333;
 }
 .sidebar .list-group-item a:hover {
-        color: #ff6600;
+    color: #ff6600;
 }
 
-/*Image nhỏ bên hông*/
+/* Promotional images in sidebar */
 .promo-container{
     display: flex;
     flex-direction: column;
@@ -114,7 +119,10 @@
     border-radius: 10px;
 }
 
-/* Danh mục icons */
+/* ===== CATEGORY STYLES ===== */
+/* Used on homepage and category pages */
+
+/* Category icons bar on homepage */
 .category-bar {
     position: relative;
     top: -150px;
@@ -136,15 +144,15 @@
 }
 
 .category-bar a {
-    text-decoration: none; /* Remove underline */
-    color: rgb(255, 255, 255); /* Match text color to white */
-    display: flex; /* Align icon and text vertically */
-    flex-direction: column; /* Stack icon above text */
-    align-items: center; /* Center horizontally */
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .category-bar a:hover {
-    color: #f0a500; /* Optional: Change color on hover to match your theme */
+    color: #f0a500;
 }
 
 .category-bar i {
@@ -160,34 +168,37 @@
     margin: 0;
 }
 
-/* Category Buttons */
+/* Category filter buttons */
 .category-buttons {
     display: flex;
-    gap: 10px; /* Space between buttons */
+    gap: 10px;
 }
 
 .category-btn {
-    background-color: #2E1A16; /* Match your theme */
+    background-color: #2E1A16;
     color: white;
     border: none;
     padding: 8px 16px;
     font-size: 14px;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .category-btn:hover {
-    background-color: #3A2A28; /* Slightly lighter on hover */
-    transform: scale(1.05); /* Slight scale-up effect */
+    background-color: #3A2A28;
+    transform: scale(1.05);
 }
 
 .category-btn.active {
-    background-color: #f0a500; /* Highlight color for selected state */
+    background-color: #f0a500;
     color: #fff;
-    font-weight: bold; /* Emphasize selected button */
+    font-weight: bold;
 }
 
-/* Navbar Top */
+/* ===== NAVBAR STYLES ===== */
+/* Used across all pages */
+
+/* Top navbar (logo, search, user, cart) */
 .navbar-top {
     background-color: #2E1A16;
     padding: 10px 0;
@@ -202,7 +213,7 @@
     color: #bbbbbb;
 }
 
-/* Search Bar */
+/* Search bar in top navbar */
 .search-box {
     max-width: 500px;
     margin: auto;
@@ -214,12 +225,22 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.search-box form {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
 .search-box input {
     border: none;
     outline: none;
     background: transparent;
     color: #333;
     flex-grow: 1;
+    padding: 5px 0;
+    height: 30px;
+    font-size: 14px;
 }
 
 .search-box input::placeholder {
@@ -227,17 +248,25 @@
 }
 
 .search-box button {
-    background: none;
+    background: #a0a0a0;
     border: none;
-    color: #a0a0a0;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s;
+    height: 36px;
 }
 
-/* Cart Badge */
+.search-box button:hover {
+    color: #007bff;
+}
+
+/* Cart badge */
 .badge.bg-danger {
     background-color: red !important;
 }
 
-/* Navbar Bottom */
+/* Bottom navbar (home, categories, contact) */
 .navbar-bottom {
     background-color: #2E1A16;
     padding: 5px 0;
@@ -246,7 +275,7 @@
 
 .navbar-bottom .navbar-nav {
     width: 100%;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: flex-start;
 }
 
 .navbar-bottom .nav-link {
@@ -275,10 +304,11 @@
     color: #f0a500;
 }
 
-/* Breadcrumb */
+/* ===== BREADCRUMB STYLES ===== */
+/* Used across all pages except homepage */
 .breadcrumb {
     background-color: transparent;
-    padding: 15px 15px;
+    padding: 15px 0;
     margin-bottom: 0;
     margin-top: 20px;
 }
@@ -296,7 +326,10 @@
     color: #333;
 }
 
-/* Ensure images fit well in their containers */
+/* ===== PRODUCT STYLES ===== */
+/* Used on product listing and detail pages */
+
+/* Product images in cards */
 .product-image {
     width: 100%;
     height: 200px;
@@ -309,7 +342,7 @@
     height: 200px;
 }
 
-/* Product details page */
+/* Product details page image */
 .product-detail-image {
     width: 100%;
     max-height: 358px;
@@ -323,4 +356,210 @@
     height: 50px;
     object-fit: cover;
     object-position: center;
+}
+
+/* ===== CATEGORY DROPDOWN STYLES ===== */
+/* Used in the bottom navbar */
+.category-dropdown-menu {
+    min-width: 600px;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    background-color: #fff;
+    width: 600px;
+}
+
+.category-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.category-column {
+    width: 32%;
+    padding: 0 5px;
+}
+
+.category-item {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.category-item a {
+    color: #333 !important;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.category-item a:hover {
+    background-color: #f8f9fa;
+    color: #2E1A16 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-bottom .dropdown-menu {
+    margin-top: 0;
+}
+
+.navbar-bottom .dropdown-toggle::after {
+    margin-left: 5px;
+}
+
+.navbar-bottom .nav-link.dropdown-toggle {
+    cursor: pointer;
+}
+
+.navbar-bottom .dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== DROPDOWN MENU FIXES ===== */
+/* Fixes for Bootstrap dropdown behavior */
+
+/* Fix for dropdown click effect */
+.dropdown-item:active, 
+.dropdown-item:focus, 
+.dropdown-item:hover, 
+.dropdown-item.active, 
+.dropdown-item:active:focus {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+}
+
+/* Fix for nav-link active state */
+.nav-link:active,
+.nav-link.active,
+.nav-link.show {
+    color: inherit !important;
+}
+.dropdown-toggle:active,
+.dropdown-toggle:focus,
+.dropdown-toggle.show {
+    color: inherit !important;
+}
+
+/* Override Bootstrap dropdown styles */
+.dropdown-menu {
+    background-color: #fff !important;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+    padding: 10px;
+}
+
+/* Account dropdown menu styles */
+.dropdown-menu .dropdown-item {
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    margin: 2px 0;
+    border-radius: 4px;
+}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    border: 1px solid #0d6efd;
+}
+
+/* Fix for navbar-bottom dropdown menus */
+.navbar-bottom .dropdown-menu {
+    padding: 10px;
+    min-width: 200px;
+}
+
+.navbar-bottom .dropdown-menu .dropdown-item {
+    padding: 8px 15px;
+    margin: 2px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.navbar-bottom .dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    border: 1px solid #0d6efd;
+}
+
+/* Fix for click effect that turns text black */
+.navbar-bottom .dropdown-toggle:active,
+.navbar-bottom .dropdown-toggle:focus,
+.navbar-bottom .dropdown-toggle.show,
+.navbar-bottom .dropdown-toggle.active {
+    color: #d1cfcf !important;
+}
+
+.navbar-bottom .dropdown-toggle:active:hover,
+.navbar-bottom .dropdown-toggle:focus:hover,
+.navbar-bottom .dropdown-toggle.show:hover,
+.navbar-bottom .dropdown-toggle.active:hover {
+    color: #f0a500 !important;
+}
+
+/* Fix for dropdown item active state */
+.dropdown-item:active,
+.dropdown-item:focus,
+.dropdown-item.active,
+.dropdown-item:active:focus {
+    color: #0d6efd !important;
+    background-color: #f8f9fa !important;
+}
+
+/* ===== USER DROPDOWN SPECIFIC STYLES ===== */
+/* These styles specifically target the user dropdown menu */
+/* The #userDropdown selector is used to target the specific dropdown menu for the logged-in user */
+
+#userDropdown + .dropdown-menu {
+    background-color: #fff !important;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+    padding: 10px;
+    min-width: 200px;
+}
+
+#userDropdown + .dropdown-menu .dropdown-item {
+    color: #333 !important;
+    padding: 8px 15px;
+    margin: 2px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#userDropdown + .dropdown-menu .dropdown-item:hover {
+    color: #0d6efd !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid #0d6efd;
+}
+
+#userDropdown + .dropdown-menu .dropdown-item:active,
+#userDropdown + .dropdown-menu .dropdown-item:focus,
+#userDropdown + .dropdown-menu .dropdown-item.active,
+#userDropdown + .dropdown-menu .dropdown-item:active:focus {
+    color: #0d6efd !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid #0d6efd;
 }

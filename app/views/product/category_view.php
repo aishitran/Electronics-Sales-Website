@@ -1,61 +1,74 @@
 <?php
 $pageTitle = 'Danh Mục Sản Phẩm';
 ?>
-<div class="container mt-4">
-    <div class="row">
-        <!-- Left Sidebar (Miscellaneous Column) -->
-        <div class="col-md-3">
-            <div class="sidebar rounded shadow-sm p-3">
-                <h5><i class="bi bi-funnel"></i> Bộ lọc</h5>
 
-                <!-- Sắp xếp sản phẩm -->
-                <div class="mb-3">
-                    <h6>Sắp xếp</h6>
-                    <select class="form-select" id="sortSelect" onchange="applySorting()">
-                        <option value="">Mặc định</option>
-                        <option value="name_asc">Tên A-Z</option>
-                        <option value="name_desc">Tên Z-A</option>
-                        <option value="price_asc">Giá thấp đến cao</option>
-                        <option value="price_desc">Giá cao xuống thấp</option>
-                    </select>
-                </div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone T-Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Left Sidebar (Miscellaneous Column) -->
+            <div class="col-md-3">
+                <div class="sidebar rounded shadow-sm p-3">
+                    <h5><i class="bi bi-funnel"></i> Bộ lọc</h5>
 
-                <!-- Lọc theo giá -->
-                <div>
-                    <h6>Chọn mức giá</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="javascript:void(0);" onclick="applyFilter('under100')" class="text-decoration-none text-dark">Giá dưới 100.000đ</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:void(0);" onclick="applyFilter('100-200')" class="text-decoration-none text-dark">100.000đ - 200.000đ</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:void(0);" onclick="applyFilter('200-400')" class="text-decoration-none text-dark">200.000đ - 400.000đ</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:void(0);" onclick="applyFilter('400-700')" class="text-decoration-none text-dark">400.000đ - 700.000đ</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:void(0);" onclick="applyFilter('above700')" class="text-decoration-none text-dark">Giá trên 700.000đ</a>
-                        </li>
-                    </ul>
+                    <!-- Sắp xếp sản phẩm -->
+                    <div class="mb-3">
+                        <h6>Sắp xếp</h6>
+                        <select class="form-select" id="sortSelect" onchange="applySorting()">
+                            <option value="">Mặc định</option>
+                            <option value="name_asc">Tên A-Z</option>
+                            <option value="name_desc">Tên Z-A</option>
+                            <option value="price_asc">Giá thấp đến cao</option>
+                            <option value="price_desc">Giá cao xuống thấp</option>
+                        </select>
+                    </div>
+
+                    <!-- Lọc theo giá -->
+                    <div>
+                        <h6>Chọn mức giá</h6>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="javascript:void(0);" onclick="applyFilter('under100')" class="text-decoration-none text-dark">Giá dưới 100.000đ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="javascript:void(0);" onclick="applyFilter('100-200')" class="text-decoration-none text-dark">100.000đ - 200.000đ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="javascript:void(0);" onclick="applyFilter('200-400')" class="text-decoration-none text-dark">200.000đ - 400.000đ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="javascript:void(0);" onclick="applyFilter('400-700')" class="text-decoration-none text-dark">400.000đ - 700.000đ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="javascript:void(0);" onclick="applyFilter('above700')" class="text-decoration-none text-dark">Giá trên 700.000đ</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Main Content (Right Column - Products of Selected Category) -->
-        <div class="col-md-9 border rounded">
-            <?php if (isset($selectedCategory)): ?>
-                <h5 class="fw-bold fs-4 mt-4 mb-3"><?= htmlspecialchars($selectedCategory['TenDanhMuc']) ?></h3>
-            <?php endif; ?>
-            <div class="row">
-                <?php if (empty($products)): ?>
-                    <div class="col-12">
-                        <p class="text-center">Không có sản phẩm nào trong danh mục này.</p>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($products as $product): ?>
+            <!-- Main Content (Right Column - Products of Selected Category) -->
+            <div class="col-md-9 border rounded">
+                <?php if (isset($selectedCategory)): ?>
+                    <h5 class="fw-bold fs-4 mt-4 mb-3"><?= htmlspecialchars($selectedCategory['TenDanhMuc']) ?></h3>
+                <?php endif; ?>
+                <div class="row">
+                    <?php 
+                    $hasProducts = false;
+                    if (!empty($products)): 
+                        foreach ($products as $product): 
+                            // Skip products with zero quantity
+                            if ($product['SoLuong'] <= 0) continue;
+                            $hasProducts = true;
+                    ?>
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <?php if (!empty($product['HinhAnh']) && file_exists('public/' . $product['HinhAnh'])): ?>
@@ -70,13 +83,21 @@ $pageTitle = 'Danh Mục Sản Phẩm';
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                    <?php 
+                        endforeach; 
+                    endif; 
+                    
+                    if (!$hasProducts): 
+                    ?>
+                        <div class="col-12">
+                            <p class="text-center">Không có sản phẩm nào trong danh mục này.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</body>
 <script>
     // Function to get URL parameters
     function getUrlParams() {

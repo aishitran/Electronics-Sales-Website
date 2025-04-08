@@ -3,7 +3,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../../models/ProductModel.php';
+require_once __DIR__ . '/../../models/CategoryModel.php';
 $productModel = new ProductModel();
+$categoryModel = new CategoryModel();
+$categories = $categoryModel->getAllCategories();
 
 // Function to get user ID from session
 function getUserId() {
@@ -57,8 +60,11 @@ if ($userId) {
 
             <!-- Search Bar -->
             <div class="search-box w-50">
-                <button><i class="fas fa-search"></i></button>
-                <input type="text" placeholder="Bạn đang tìm kiếm gì?">
+                <form action="/index.php" method="GET" class="d-flex w-100">
+                    <input type="hidden" name="action" value="searchProducts">
+                    <input type="text" name="keyword" class="form-control" placeholder="Bạn đang tìm kiếm gì?" value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </form>
             </div>
 
             <!-- Right-side Nav -->
@@ -70,11 +76,10 @@ if ($userId) {
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
                         <?php if ($_SESSION['user']['MaVaiTro'] == 2): ?>
-                            <li><a class="dropdown-item" href="/index.php?action=adminProducts">Quản Lý Sản Phẩm</a></li>
-                            <li><a class="dropdown-item" href="/index.php?action=adminCategories">Quản Lý Danh Mục</a></li>
-                            <li><a class="dropdown-item" href="/index.php?action=adminOrders">Quản Lý Đơn Hàng</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=adminPanel">Quản Lý</a></li>
                         <?php endif; ?>
-                            <li><a class="dropdown-item" href="/index.php?action=accountOrders">Xem Đơn Hàng</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=accountInfo">Thông Tin Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="/index.php?action=orderHistory">Xem Đơn Hàng</a></li>
                             <li><a class="dropdown-item" href="/index.php?action=logout">Đăng Xuất</a></li>
                         </ul>
                     </li>
@@ -105,6 +110,37 @@ if ($userId) {
                 <li class="nav-item">
                     <a class="nav-link" href="/index.php">Trang chủ</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Danh mục
+                    </a>
+                    <ul class="dropdown-menu category-dropdown-menu" aria-labelledby="categoryDropdown">
+                        <?php 
+                        if (!empty($categories)) {
+                            $totalCategories = count($categories);
+                            $categoriesPerColumn = ceil($totalCategories / 3);
+                            
+                            echo '<div class="category-columns">';
+                            // Create 3 columns
+                            for ($col = 0; $col < 3; $col++) {
+                                echo '<div class="category-column">';
+                                for ($i = $col * $categoriesPerColumn; $i < min(($col + 1) * $categoriesPerColumn, $totalCategories); $i++) {
+                                    $category = $categories[$i];
+                                    echo '<div class="category-item">';
+                                    echo '<a class="dropdown-item" href="/index.php?action=viewCategory&id=' . htmlspecialchars($category['MaDanhMuc']) . '">';
+                                    echo htmlspecialchars($category['TenDanhMuc']);
+                                    echo '</a>';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
+                            }
+                            echo '</div>';
+                        } else {
+                            echo '<li><span class="dropdown-item">Không có danh mục nào</span></li>';
+                        }
+                        ?>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/index.php?action=contact">Liên hệ</a>
                 </li>
@@ -113,8 +149,8 @@ if ($userId) {
     </nav>
 
     <!-- Breadcrumb Navigation -->
-    <nav aria-label="breadcrumb">
-        <div class="container">
+    <div class="container">
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <?php if (isset($pageTitle) && $pageTitle !== 'Trang Chủ'): ?>
                     <!-- Breadcrumb for pages other than homepage -->
@@ -127,8 +163,8 @@ if ($userId) {
                     <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
                 <?php endif; ?>
             </ol>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
 
     <!-- Bootstrap JavaScript (moved to footer if needed, but kept here for completeness) -->

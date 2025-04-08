@@ -3,13 +3,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
+
 require_once __DIR__ . '/app/controllers/ProductController.php';
 require_once __DIR__ . '/app/controllers/CategoryController.php';
 require_once __DIR__ . '/app/controllers/OrderController.php';
+require_once __DIR__ . '/app/controllers/AccountController.php';
 
-$controller = new ProductController();
-$categorycontroller = new CategoryController();
-$ordercontroller = new OrderController();
+$productController = new ProductController();
+$categoryController = new CategoryController();
+$orderController = new OrderController();
+$accountController = new AccountController();
+
 $action = $_GET['action'] ?? '';
 $sort = $_GET['sort'] ?? '';
 $price = $_GET['price'] ?? '';
@@ -18,54 +22,73 @@ $price = $_GET['price'] ?? '';
 switch ($action) {
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->login();
-            exit(); // Ensure no further processing after redirect
+            $accountController->login();
+            exit();
         }
         break;
 
     case 'signup':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->signup();
+            $accountController->signup();
             exit();
         }
         break;
 
     case 'logout':
-        $controller->logout();
+        $accountController->logout();
         exit();
         break;
 
+    case 'accountInfo':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $accountController->updateAccountInfo();
+            exit();
+        }
+        break;
+        
     case 'addToCart':
         $id = $_POST['product_id'] ?? 0;
-        $controller->addToCart($id);
+        $productController->addToCart($id);
         header("Location: /index.php?action=cart");
         exit();
         break;
 
     case 'deleteProduct':
         $id = $_GET['id'] ?? 0;
-        $controller->deleteProduct($id);
+        $productController->deleteProduct($id);
+        exit();
+        break;
+
+    case 'deleteCategory':
+        $id = $_GET['id'] ?? 0;
+        $categoryController->delete($id);
         exit();
         break;
 
     case 'removeFromCart':
         $id = $_GET['id'] ?? 0;
-        $controller->removeFromCart($id);
+        $productController->removeFromCart($id);
         header("Location: /index.php?action=cart");
         exit();
+        break;
+
+    case 'updateCartQuantity':
+        $id = $_GET['id'] ?? 0;
+        $change = $_GET['change'] ?? 0;
+        $productController->updateCartQuantity($id, $change);
         break;
 
     case 'editProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_GET['id'] ?? 0;
-            $controller->editProduct($id);
+            $productController->editProduct($id);
             exit();
         }
         break;
 
     case 'createProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->createProduct();
+            $productController->createProduct();
             exit();
         }
         break;
@@ -73,14 +96,14 @@ switch ($action) {
     case 'editCategory':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_GET['id'] ?? 0;
-            $categorycontroller->edit($id);
+            $categoryController->edit($id);
             exit();
         }
         break;
 
     case 'createCategory':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $categorycontroller->create();
+            $categoryController->create();
             exit();
         }
         break;
@@ -88,23 +111,24 @@ switch ($action) {
     case 'editOrder':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_GET['id'] ?? 0;
-            $ordercontroller->edit($id);
+            $orderController->edit($id);
             exit();
         }
         break;
 
     case 'createOrder':
-        $ordercontroller->createOrder();
-        exit(); // Crucial to stop further processing after redirect
+        $orderController->createOrder();
+        exit();
         break;
 
     case 'deleteOrder':
         $id = $_GET['id'] ?? 0;
-        $ordercontroller->deleteOrder($id);
+        $orderController->delete($id);
+        exit();
         break;
 
     case 'confirmPayment':
-        $ordercontroller->confirmPayment();
+        $orderController->confirmPayment();
         exit();
         break;
 }
@@ -129,17 +153,20 @@ switch ($action) {
     case 'signup':
         $pageTitle = 'Đăng Ký Tài Khoản';
         break;
+    case 'accountInfo':
+        $pageTitle = 'Thông Tin Tài Khoản';
+        break;
     case 'accountOrders':
         $pageTitle = 'Xem Đơn Hàng';
         break;
-    case 'adminProducts':
-        $pageTitle = 'Quản Lý Sản Phẩm';
+    case 'orderHistory':
+        $pageTitle = 'Lịch Sử Đơn Hàng';
         break;
-    case 'adminCategories':
-        $pageTitle = 'Quản Lý Danh Mục';
+    case 'orderStatus':
+        $pageTitle = 'Chi Tiết Đơn Hàng';
         break;
-    case 'adminOrders':
-        $pageTitle = 'Quản Lý Đơn Hàng';
+    case 'adminPanel':
+        $pageTitle = 'Admin Panel';
         break;
     case 'createOrder':
         $pageTitle = 'Tạo Đơn Hàng';
@@ -159,16 +186,19 @@ switch ($action) {
     case 'editOrder':
         $pageTitle = 'Sửa Đơn Hàng';
         break;
+    case 'searchProducts':
+        $pageTitle = 'Kết Quả Tìm Kiếm';
+        break;
     default:
         $pageTitle = 'Trang Chủ';
         break;
 }
 
-// Include header only if no redirect has occurred
-$header = __DIR__ . '/app/views/shares/header.php';
-if (file_exists($header)) {
+// Include header only if action is NOT adminPanel
+$header = __DIR__ . '/app/views/layout/header.php';
+if ($action !== 'adminPanel' && file_exists($header)) {
     include $header;
-} else {
+} elseif ($action !== 'adminPanel') {
     echo "Không tìm thấy header.php<br>";
 }
 
@@ -176,86 +206,95 @@ if (file_exists($header)) {
 switch ($action) {
     case 'viewProduct':
         $id = $_GET['id'] ?? 0;
-        $controller->viewProduct($id);
+        $productController->viewProduct($id);
         break;
 
     case 'viewAllProduct':
-        $controller->viewAllProduct();
+        $productController->viewAllProduct();
         break;
 
     case 'viewCategory':
         $id = $_GET['id'] ?? 0;
-        $categorycontroller->viewCategory($id, $sort, $price);
+        $categoryController->viewCategory($id, $sort, $price);
         break;
 
     case 'cart':
-        $controller->showCart();
+        $productController->showCart();
         break;
 
     case 'login':
-        $controller->showLogin();
+        $accountController->showLogin();
         break;
 
     case 'signup':
-        $controller->showSignup();
+        $accountController->showSignup();
         break;
 
+    case 'accountInfo':
+        $accountController->showAccountInfo();
+        break;
+        
     case 'contact':
         require 'app/views/product/contact.php';
         break;
 
     case 'checkout':
-        require 'app/views/product/checkout.php';
+        require 'app/views/cart/checkout.php';
         break;
 
     case 'accountOrders':
-        require 'app/views/product/order_status.php';
+        $orderController->orderHistory();
         break;
 
-    case 'adminProducts':
-        $controller->adminProducts();
+    case 'orderHistory':
+        $orderController->orderHistory();
         break;
 
-    case 'adminCategories':
-        $categorycontroller->index();
+    case 'orderStatus':
+        $orderController->showOrderStatus();
         break;
 
-    case 'adminOrders':
-        $ordercontroller->index();
+    case 'adminPanel':
+        $productController->adminPanel();
         break;
 
     case 'createProduct':
-        $controller->createProduct();
+        $productController->createProduct();
         break;
 
     case 'editProduct':
         $id = $_GET['id'] ?? 0;
-        $controller->editProduct($id);
+        $productController->editProduct($id);
         break;
 
     case 'editCategory':
         $id = $_GET['id'] ?? 0;
-        $categorycontroller->edit($id);
+        $categoryController->edit($id);
         break;
 
     case 'createCategory':
-        $categorycontroller->create();
+        $categoryController->create();
         break;
 
     case 'editOrder':
         $id = $_GET['id'] ?? 0;
-        $ordercontroller->edit($id);
+        $orderController->edit($id);
+        break;
+
+    case 'searchProducts':
+        $productController->searchProducts();
         break;
 
     default:
-        $controller->listProducts();
+        $productController->listProducts();
         break;
 }
 
-// Include footer
-$footer = __DIR__ . '/app/views/shares/footer.php';
-if (file_exists($footer)) {
+// Include footer only if action is NOT adminPanel
+$footer = __DIR__ . '/app/views/layout/footer.php';
+if ($action !== 'adminPanel' && file_exists($footer)) {
     include $footer;
-} else {
+} elseif ($action !== 'adminPanel') {
     echo "Không tìm thấy footer.php<br>";
 }
+?>

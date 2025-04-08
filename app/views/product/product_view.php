@@ -13,6 +13,10 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -32,7 +36,11 @@
                 <p><strong>Số Lượng:</strong> <?= htmlspecialchars($product['SoLuong']) ?></p>
                 <form method="POST" action="/index.php?action=addToCart">
                     <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['MaSanPham']) ?>">
-                    <button type="submit" class="btn btn-primary">Thêm Vào Giỏ Hàng</button>
+                    <?php if ($product['SoLuong'] > 0): ?>
+                        <button type="submit" class="btn btn-primary">Thêm Vào Giỏ Hàng</button>
+                    <?php else: ?>
+                        <button type="button" class="btn btn-secondary btn-disabled" disabled>Hết Hàng</button>
+                    <?php endif; ?>
                 </form>
                 <a href="/index.php" class="btn btn-secondary mt-2">Quay Lại</a>
             </div>

@@ -6,13 +6,9 @@
     <title>Đăng Nhập - Clone T-Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
-        }
         .login-container {
             max-width: 400px;
-            margin: 50px auto;
+            margin: 50px auto; 
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
@@ -58,8 +54,9 @@
     <div class="login-container">
         <h2>ĐĂNG NHẬP</h2>
         <p>Nếu bạn chưa có tài khoản, đăng ký tại đây</p>
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']) ?></div>
+            <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
         <form method="POST" action="/index.php?action=login">
             <div class="mb-3">

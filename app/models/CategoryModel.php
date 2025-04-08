@@ -12,17 +12,43 @@ class CategoryModel {
         }
     }
 
+    /**
+     * Used by:
+     * - CategoryController::index() -> app/views/admin/admin_categories.php
+     * - CategoryController::viewCategory() -> app/views/product/category_view.php
+     * - ProductController::adminPanel() -> app/views/admin/admin_panel.php
+     * - ProductController::createProduct() -> app/views/admin/product_create.php
+     * - ProductController::editProduct() -> app/views/admin/product_edit.php
+     * 
+     * Retrieves all categories from the database
+     */
     public function getAllCategories() {
         $stmt = $this->conn->query("SELECT * FROM DANHMUC ORDER BY MaDanhMuc ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Used by:
+     * - CategoryController::viewCategory() -> app/views/product/category_view.php
+     * - CategoryController::edit() -> app/views/admin/category_edit.php
+     * - ProductController::createProduct() -> app/views/admin/product_create.php
+     * - ProductController::editProduct() -> app/views/admin/product_edit.php
+     * 
+     * Retrieves a specific category by its ID
+     */
     public function getCategoryById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM DANHMUC WHERE MaDanhMuc = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Used by:
+     * - CategoryController::viewCategory() -> app/views/product/category_view.php
+     * - ProductController::viewCategory() -> app/views/product/category_view.php
+     * 
+     * Retrieves all products in a specific category with optional sorting and filtering
+     */
     public function getProductsByCategory($categoryId, $sort = '', $price = '') {
         $query = "SELECT * FROM SANPHAM WHERE MaDanhMuc = ?";
         $params = [$categoryId];
@@ -61,6 +87,13 @@ class CategoryModel {
     
     
 
+    /**
+     * Used by:
+     * - CategoryController::create() -> app/views/admin/category_create.php
+     * - CategoryController::index() -> app/views/admin/admin_categories.php
+     * 
+     * Creates a new category in the database
+     */
     public function createCategory($tenDanhMuc) {
         try {
             $stmt = $this->conn->prepare("INSERT INTO DANHMUC (TenDanhMuc) VALUES (?)");
@@ -70,6 +103,13 @@ class CategoryModel {
         }
     }
 
+    /**
+     * Used by:
+     * - CategoryController::edit() -> app/views/admin/category_edit.php
+     * - CategoryController::index() -> app/views/admin/admin_categories.php
+     * 
+     * Updates an existing category in the database
+     */
     public function updateCategory($id, $tenDanhMuc) {
         try {
             $stmt = $this->conn->prepare("UPDATE DANHMUC SET TenDanhMuc = ? WHERE MaDanhMuc = ?");
@@ -79,6 +119,13 @@ class CategoryModel {
         }
     }
 
+    /**
+     * Used by:
+     * - CategoryController::delete() -> app/views/admin/admin_categories.php
+     * - CategoryController::index() -> app/views/admin/admin_categories.php
+     * 
+     * Deletes a category from the database
+     */
     public function deleteCategory($id) {
         try {
             $stmt = $this->conn->prepare("DELETE FROM DANHMUC WHERE MaDanhMuc = ?");
