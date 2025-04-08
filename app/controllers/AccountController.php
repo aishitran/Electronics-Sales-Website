@@ -40,22 +40,30 @@ class AccountController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $matKhau = $_POST['matKhau'] ?? '';
-            $user = $this->accountModel->loginUser($email, $matKhau);
-            if ($user) {
-                $_SESSION['user'] = $user;
-                
-                // Merge session cart into database cart
-                if (!empty($_SESSION['cart'])) {
-                    foreach ($_SESSION['cart'] as $id => $item) {
-                        $this->productModel->addToCart($user['MaNguoiDung'], $id, $item['quantity']);
+            
+            try {
+                $user = $this->accountModel->loginUser($email, $matKhau);
+                if ($user) {
+                    $_SESSION['user'] = $user;
+                    $_SESSION['success'] = "Đăng nhập thành công";
+                    
+                    // Merge session cart into database cart
+                    if (!empty($_SESSION['cart'])) {
+                        foreach ($_SESSION['cart'] as $id => $item) {
+                            $this->productModel->addToCart($user['MaNguoiDung'], $id, $item['quantity']);
+                        }
+                        unset($_SESSION['cart']); // Clear session cart after merging
                     }
-                    unset($_SESSION['cart']); // Clear session cart after merging
+                    
+                    header('Location: /index.php?action=home');
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Email hoặc mật khẩu không đúng.";
+                    header('Location: /index.php?action=login');
+                    exit();
                 }
-                
-                header('Location: /index.php');
-                exit();
-            } else {
-                $_SESSION['error'] = "Email hoặc mật khẩu không đúng.";
+            } catch (PDOException $e) {
+                $_SESSION['error'] = "Lỗi đăng nhập: " . $e->getMessage();
                 header('Location: /index.php?action=login');
                 exit();
             }
@@ -88,12 +96,25 @@ class AccountController {
             $soDienThoai = $_POST['soDienThoai'] ?? '';
             $diaChi = $_POST['diaChi'] ?? '';
             
-            if ($this->accountModel->registerUser($hoTen, $email, $matKhau, $soDienThoai, $diaChi)) {
-                header('Location: /index.php?action=login');
+            try {
+                if ($this->accountModel->registerUser($hoTen, $email, $matKhau, $soDienThoai, $diaChi)) {
+                    $_SESSION['success'] = "Đăng ký thành công";
+                    header('Location: /index.php?action=login');
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Đăng ký thất bại. Vui lòng thử lại.";
+                    header('Location: /index.php?action=signup');
+                    exit();
+                }
+            } catch (PDOException $e) {
+                // Check if it's a duplicate key error
+                if (strpos($e->getMessage(), 'Violation of UNIQUE KEY constraint') !== false) {
+                    $_SESSION['error'] = "Email đã tồn tại. Vui lòng sử dụng email khác.";
+                } else {
+                    $_SESSION['error'] = "Lỗi đăng ký: " . $e->getMessage();
+                }
+                header('Location: /index.php?action=signup');
                 exit();
-            } else {
-                $error = "Đăng ký thất bại. Email có thể đã tồn tại.";
-                require 'app/views/auth/signup.php';
             }
         }
     }

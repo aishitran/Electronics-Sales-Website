@@ -285,6 +285,10 @@ switch ($action) {
         $productController->searchProducts();
         break;
 
+    case 'home':
+        $productController->listProducts();
+        break;
+
     default:
         $productController->listProducts();
         break;

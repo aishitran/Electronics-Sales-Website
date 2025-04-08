@@ -49,7 +49,6 @@ if ($userId) {
     <link rel="stylesheet" href="app/public/css/style.css">
 </head>
 <body>
-
     <!-- Top Navbar (Logo, Search Bar, User Info, Cart) -->
     <nav class="navbar navbar-expand-lg navbar-top">
         <div class="container">

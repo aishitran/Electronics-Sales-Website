@@ -124,7 +124,7 @@ class AccountModel
             $stmt->bindParam(':maVaiTro', $maVaiTro, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
-            die("❌ Lỗi đăng ký người dùng: " . $e->getMessage());
+            throw $e;
         }
     }
 
@@ -146,7 +146,7 @@ class AccountModel
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            die("❌ Lỗi đăng nhập: " . $e->getMessage());
+            throw $e;
         }
     }
 } 

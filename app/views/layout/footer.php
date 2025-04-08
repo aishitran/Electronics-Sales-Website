@@ -55,3 +55,59 @@
 </footer> 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Toast container for notifications -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050;"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check for session messages
+        <?php if (isset($_SESSION['error'])): ?>
+            showToast('danger', '<?= htmlspecialchars($_SESSION['error']) ?>');
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+        
+        <?php if (isset($_SESSION['success'])): ?>
+            showToast('success', '<?= htmlspecialchars($_SESSION['success']) ?>');
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+        
+        // Function to show toast notifications
+        function showToast(type, message) {
+            const toastContainer = document.querySelector('.toast-container');
+            
+            // Create toast element
+            const toastElement = document.createElement('div');
+            toastElement.className = `toast align-items-center text-white bg-${type} border-0`;
+            toastElement.setAttribute('role', 'alert');
+            toastElement.setAttribute('aria-live', 'assertive');
+            toastElement.setAttribute('aria-atomic', 'true');
+            
+            toastElement.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            
+            // Add to container
+            toastContainer.appendChild(toastElement);
+            
+            // Initialize Bootstrap toast
+            const toast = new bootstrap.Toast(toastElement, {
+                autohide: true,
+                delay: 3000
+            });
+            
+            // Show the toast
+            toast.show();
+            
+            // Remove from DOM after it's hidden
+            toastElement.addEventListener('hidden.bs.toast', function() {
+                toastElement.remove();
+            });
+        }
+    });
+</script>
